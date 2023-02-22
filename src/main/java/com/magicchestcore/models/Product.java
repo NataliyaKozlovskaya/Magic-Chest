@@ -11,6 +11,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Table(name = "product")
 public class Product {
     @Id
@@ -21,10 +22,4 @@ public class Product {
     @Column(name="name")
     private String name;
 
-    //@OneToOne----???????
-//    @Column(name="shoes")
-//    private Shoes shoes;
-//
-//    @Column(name="bag")
-//    private Bag bag;
 }

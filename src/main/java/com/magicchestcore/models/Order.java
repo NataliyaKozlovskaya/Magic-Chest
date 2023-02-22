@@ -3,6 +3,7 @@ package com.magicchestcore.models;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 @ToString
 @Setter
@@ -18,9 +19,8 @@ public class Order {
     @Column(name="id")
     private Integer id;
 
-    @OneToOne
-    @JoinColumn(name="product_id")
-    private Product product;
+    @OneToMany
+    private List<Product> products;
 
     @Column(name="quantity")
     private Integer quantity;

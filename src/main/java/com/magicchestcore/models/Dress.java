@@ -12,17 +12,9 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "dress")
-public class Dress {
-    @Id
-    @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+public class Dress extends Product {
 
-    @Column(name="name")
-    private String name;
-
-    @OneToOne
+    @OneToOne(cascade={CascadeType.MERGE, CascadeType.ALL})//?????  all - не работает
     @JoinColumn(name = "dress_model_id")
     private DressModel dressModel;
 

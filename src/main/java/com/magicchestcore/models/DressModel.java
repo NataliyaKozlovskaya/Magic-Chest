@@ -22,8 +22,8 @@ public class DressModel {
 
     @Column(name = "model")
     private String model;
-
-    @Column(name = "price")
-    private Integer price;
+//
+//    @Column(name = "price")
+//    private Integer price;
 
 }
