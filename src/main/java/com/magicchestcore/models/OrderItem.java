@@ -3,7 +3,6 @@ package com.magicchestcore.models;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.Date;
 import java.util.List;
 
 @ToString
@@ -12,22 +11,18 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "orders")
-public class Order {
-
+@Table(name = "order_item")
+public class OrderItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
     private Integer id;
 
-    @Column(name="price")
     private Integer price;
+    private Integer quantity;
 
-    @Column(name="date")
-    private Date date;
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    private Product product;
 
-
-
-    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    private List<OrderItem> orderItemList;
 }

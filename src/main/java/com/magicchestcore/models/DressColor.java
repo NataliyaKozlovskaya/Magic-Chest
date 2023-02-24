@@ -1,6 +1,9 @@
 package com.magicchestcore.models;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 
@@ -8,22 +11,16 @@ import javax.persistence.*;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
 @Entity
-@Table(name = "dress_model")
-public class DressModel {
+@Table(name = "dress_color")
+public class DressColor {
 
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "model")
+    @Column(name = "color")
     private String model;
 
-    @Column(name = "price")
-    private Integer price;
-
-    @Column(name = "quantity")
-    private Integer quantity;
 }

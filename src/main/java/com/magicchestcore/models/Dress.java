@@ -1,9 +1,6 @@
 package com.magicchestcore.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -11,27 +8,17 @@ import javax.persistence.*;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 @Entity
 public class Dress extends Product {
 
-    @OneToOne(cascade={CascadeType.MERGE, CascadeType.ALL})//?????  all - не работает
+    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})//?????  all - не работает
     @JoinColumn(name = "dress_model_id")
     private DressModel dressModel;
 
-    @Column(name = "quantity")
-    private Integer quantity;
+
+    @OneToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "dress_size_id")
+    private DressSize size;
 }
-//    @Column(name = "dress_color")
-//    @OneToOne(mappedBy = "dress")
-//    private DressColor color;
-//
-//    @Column(name = "dress_size")
-//    @OneToOne
-//    private DressSize size;
-
-//
-//
-//    @Column(name="price")
-//    private Integer price;
-
 

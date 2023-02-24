@@ -4,6 +4,7 @@ import lombok.*;
 import org.hibernate.mapping.Bag;
 
 import javax.persistence.*;
+import java.util.List;
 
 @ToString
 @Setter
@@ -19,7 +20,27 @@ public class Product {
     @Column(name="id")
     private Integer id;
 
-    @Column(name="name")
-    private String name;
+    private Integer quantity;
+
+    @OneToMany
+    @JoinColumn(name="color_id")
+    private List<Color> colors;
+
+    @OneToMany
+    @JoinColumn(name="dress_model_id")
+    private List<DressModel> dressModelList;
+
+    @OneToMany
+    @JoinColumn(name="shoes_model_id")
+    private List<ShoesModel> shoesModelList;
+
+    @OneToMany
+    @JoinColumn(name="bag_model_id")
+    private List<BagModel> bagModelList;
+
+    @OneToMany
+    @JoinColumn(name="dress_size_id")
+    private List<DressSize> dressSizeList;
+
 
 }
