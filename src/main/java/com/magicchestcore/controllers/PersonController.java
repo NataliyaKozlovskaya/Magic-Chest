@@ -7,6 +7,7 @@ import com.magicchestcore.security.PersonDetails;
 import com.magicchestcore.servicies.PersonService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.BindingResult;
@@ -41,9 +42,17 @@ public class PersonController {
 
     // for admin
     @GetMapping("/{id}")
-    public Optional<PersonDTO> findById(@PathVariable("id") Integer id){
-        return convertToPersonDTO(personService.findById(id));
+    public ResponseEntity findById(@PathVariable("id") Integer id){
+        Optional<Person> person = personService.findById(id);
+        if(person.isPresent()){
+            PersonDTO personDTO = convertToPersonDTO(person.get());
+            return ResponseEntity.ok(personDTO);
+        }else {
+            return ResponseEntity.notFound().build();
+        }
     }
+
+
 
 
     @PostMapping("/registration")

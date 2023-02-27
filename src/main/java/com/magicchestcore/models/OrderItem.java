@@ -13,20 +13,24 @@ import java.util.List;
 @Entity
 @Table(name = "order_item")
 public class OrderItem {
+//    @Id//не будет
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Column(name="id")
+//    private Integer id;
+
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id")
-    private Integer id;
-
-    private Integer price;
-    private Integer quantity;
-
-    @ManyToOne
+    @ManyToOne//
     @JoinColumn(name="order_id")
     private Order order;
 
+    @Id
     @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;
+
+
+    private Integer price;
+    private Integer quantity;
 
 }
