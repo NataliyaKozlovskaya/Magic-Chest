@@ -1,6 +1,5 @@
 package com.magicchestcore.servicies;
 
-import com.magicchestcore.models.Dress;
 import com.magicchestcore.models.DressModel;
 import com.magicchestcore.repositories.DressModelRepository;
 import org.springframework.stereotype.Service;

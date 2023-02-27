@@ -10,7 +10,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Optional;
 @Service
 @Transactional(readOnly = true)
@@ -30,28 +29,5 @@ public class PersonDetailsService implements UserDetailsService {
             throw new UsernameNotFoundException("Person not found");
         }
         return new PersonDetails(person.get());
-    }
-
-    public List<Person> findAll(){
-        return personRepository.findAll();
-    }
-
-    public Optional <Person> findById(Integer id){
-        return personRepository.findById(id);
-    }
-
-    @Transactional
-    public void save(Person person){
-        personRepository.save(person);
-    }
-
-    @Transactional
-    public void update(Integer id, Person updatedPerson){
-        updatedPerson.setId(id);
-        personRepository.save(updatedPerson);
-    }
-    @Transactional
-    public void deleteById(Integer id){
-        personRepository.deleteById(id);
     }
 }

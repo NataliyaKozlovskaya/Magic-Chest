@@ -12,12 +12,12 @@ import javax.persistence.*;
 @Entity
 public class Bag extends Product {
 
-    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})//?????  all - не работает
+    @ManyToOne
     @JoinColumn(name = "bag_model_id")
     private BagModel bagModel;
 
 
-    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @ManyToOne
     @JoinColumn(name = "bag_size_id")
     private BagSize size;
 

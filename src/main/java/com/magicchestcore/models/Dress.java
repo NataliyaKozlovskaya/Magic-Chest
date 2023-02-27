@@ -12,13 +12,13 @@ import javax.persistence.*;
 @Entity
 public class Dress extends Product {
 
-    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})//?????  all - не работает
+    @ManyToOne
     @JoinColumn(name = "dress_model_id")
     private DressModel dressModel;
 
 
-    @OneToOne(cascade = CascadeType.MERGE)
+    @ManyToOne
     @JoinColumn(name = "dress_size_id")
-    private DressSize size;
+    private DressSize dressSize;
 }
 

@@ -3,6 +3,7 @@ package com.magicchestcore.models;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -26,8 +27,13 @@ public class Order {
     @Column(name="date")
     private Date date;
 
+    @ManyToOne
+    @JoinColumn(name="person_id")
+    private Person person;
+
+    @OneToMany(mappedBy = "order", cascade = {CascadeType.PERSIST, CascadeType.MERGE},
+            orphanRemoval = true)
+    private List<OrderItem> orderItemList = new ArrayList<>();
 
 
-    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    private List<OrderItem> orderItemList;
 }

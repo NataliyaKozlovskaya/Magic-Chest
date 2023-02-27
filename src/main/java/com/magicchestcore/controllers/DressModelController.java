@@ -1,6 +1,5 @@
 package com.magicchestcore.controllers;
 
-import com.magicchestcore.models.Dress;
 import com.magicchestcore.models.DressModel;
 import com.magicchestcore.servicies.DressModelService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +20,9 @@ public class DressModelController {
 
     @GetMapping
     public List <DressModel> findAll() {
-        return dressModelService.findAll();
+        List<DressModel> all = dressModelService.findAll();
+        System.out.println("all");
+        return all;
     }
 
     @GetMapping("/{id}")

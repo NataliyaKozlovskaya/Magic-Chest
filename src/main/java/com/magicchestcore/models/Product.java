@@ -4,6 +4,7 @@ import lombok.*;
 import org.hibernate.mapping.Bag;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @ToString
@@ -22,25 +23,26 @@ public class Product {
 
     private Integer quantity;
 
-    @OneToMany
+    @ManyToOne
     @JoinColumn(name="color_id")
-    private List<Color> colors;
+    private Color color;
 
-    @OneToMany
-    @JoinColumn(name="dress_model_id")
-    private List<DressModel> dressModelList;
+   @ManyToOne
+   @JoinColumn(name="dress_model_id")
+    private DressModel dressModel;
 
-    @OneToMany
+    @ManyToOne
     @JoinColumn(name="shoes_model_id")
-    private List<ShoesModel> shoesModelList;
+    private ShoesModel shoesModel;
 
-    @OneToMany
+    @ManyToOne
     @JoinColumn(name="bag_model_id")
-    private List<BagModel> bagModelList;
+    private BagModel bagModel;
 
-    @OneToMany
+    @ManyToOne
     @JoinColumn(name="dress_size_id")
-    private List<DressSize> dressSizeList;
+    private DressSize dressSize;
 
-
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<OrderItem> orderItemList=new ArrayList<>();
 }

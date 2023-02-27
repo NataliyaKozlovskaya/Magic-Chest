@@ -3,6 +3,8 @@ package com.magicchestcore.models;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Setter
 @Getter
@@ -24,6 +26,6 @@ public class DressModel {
     @Column(name = "price")
     private Integer price;
 
-    @Column(name = "quantity")
-    private Integer quantity;
+    @OneToMany(mappedBy = "dressModel", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Dress> dresses = new ArrayList<>();
 }

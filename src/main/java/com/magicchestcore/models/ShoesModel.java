@@ -25,7 +25,5 @@ public class ShoesModel {
     @Column(name = "price")
     private Integer price;
 
-    @Column(name = "quantity")
-    private Integer quantity;
 
 }

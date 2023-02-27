@@ -1,8 +1,12 @@
 package com.magicchestcore.models;
 
+import com.magicchestcore.config.util.EnumRole;
 import lombok.*;
 
+import javax.management.relation.Role;
 import javax.persistence.*;
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @ToString
@@ -12,7 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "person")
-public class Person {
+public class Person implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -24,7 +28,13 @@ public class Person {
     @Column(name="password")
     private String password;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Order> orders;
+    @Column(name = "role")
+    @Enumerated(EnumType.STRING)//??? какой тип в бд?
+    private EnumRole role;
+
+
+    @OneToMany(mappedBy = "person", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Order> orders = new ArrayList<>();
+
 
 }
