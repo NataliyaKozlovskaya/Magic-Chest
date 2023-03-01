@@ -1,10 +1,12 @@
 package com.magicchestcore.config;
 
+import com.magicchestcore.config.util.Guard;
 import com.magicchestcore.servicies.PersonDetailsService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -32,11 +34,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected  void configure(HttpSecurity http) throws Exception{
         http
                 .csrf().disable()
-                .authorizeHttpRequests((request) -> request
+                .authorizeRequests()
+                //.authorizeHttpRequests((request) -> request
+
+
                         .antMatchers("/person/registration").permitAll()
-                        .antMatchers("/person").hasRole("ROLE_ADMIN")
+                        .antMatchers("/person").hasRole("ADMIN")
+
+                        .antMatchers(HttpMethod.GET,"/person/{id}").access("@guard.checkUserId(authentication,#id)")
+                        //.antMatchers(HttpMethod.PATCH,"/person/{id}").access("@guard.checkUserId(authentication,#id)")
+                        //.antMatchers(HttpMethod.GET, "/person/{id}").access(("@guard.checkUserId(authentication, #id)")
                         .anyRequest().authenticated()
-                )
+                .and()
                 .httpBasic(withDefaults());
     }
 

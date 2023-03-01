@@ -3,6 +3,7 @@ package com.magicchestcore.models;
 import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 @ToString
@@ -12,21 +13,17 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "order_item")
-public class OrderItem {
-//    @Id//не будет
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @Column(name="id")
-//    private Integer id;
+public class OrderItem implements Serializable {
 
 
     @Id
-    @ManyToOne//
-    @JoinColumn(name="order_id")
+    @ManyToOne
+    //@JoinColumn(name="order_id")
     private Order order;
 
     @Id
     @ManyToOne
-    @JoinColumn(name = "product_id")
+    //@JoinColumn(name = "product_id")
     private Product product;
 
 

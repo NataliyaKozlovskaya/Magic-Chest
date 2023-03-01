@@ -1,17 +1,25 @@
 package com.magicchestcore.dto;
 
 import com.magicchestcore.models.OrderItem;
-import com.magicchestcore.models.Person;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public class OrderDTO {
 
+    private Integer id;
     private Integer price;
     private Date date;
     private PersonDTO person;
-    private List<OrderItem> orderItemList = new ArrayList<>();
+    //private List<OrderItem> orderItemList = new ArrayList<>();
+
 }

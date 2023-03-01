@@ -1,14 +1,10 @@
 package com.magicchestcore.controllers;
 
 import com.magicchestcore.dto.OrderDTO;
-import com.magicchestcore.dto.PersonDTO;
 import com.magicchestcore.models.Order;
-import com.magicchestcore.models.Person;
 import com.magicchestcore.servicies.OrderService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.cassandra.CassandraProperties;
-import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,6 +24,7 @@ public class OrderController {
         this.modelMapper = modelMapper;
     }
 
+    // admin
     @GetMapping("/order")
     public List<OrderDTO> findAll() {
         return orderService.findAll().stream().map(this::convertToOrderDTO)
@@ -39,8 +36,11 @@ public class OrderController {
     //??????
     @GetMapping("/person/{personId}/order")//подумать нужен ли ?
     public List<OrderDTO> findOrdersByPersonId(@PathVariable("personId") Integer personId) {
-        return orderService.findOrdersByPersonId(personId).stream()
-                .map(this::convertToOrderDTO).collect(Collectors.toList());
+        List<Order> ordersByPersonId = orderService.findOrdersByPersonId(personId);
+        System.out.println("Test");
+        List<OrderDTO> collect = ordersByPersonId.stream().map(this::convertToOrderDTO).collect(Collectors.toList());
+        return collect;
+
     }
 
 

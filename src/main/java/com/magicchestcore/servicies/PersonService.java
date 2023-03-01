@@ -45,33 +45,20 @@ public class PersonService {
         return personRepository.findById(id);
     }
 
-    @Transactional
+    public Optional<Person> findPersonById(Integer id){
+        return personRepository.findById(id);
+    }
+
+    //for user как проверить , что он себя изменяет?
+    @Transactional//ПЕРЕДЕЛАТЬ TODO:
     public void update(Integer id, Person updatedPerson){
-        updatedPerson.setId(id);
-        personRepository.save(updatedPerson);
+        Integer updatedPersonId = updatedPerson.getId();
+        if(updatedPersonId.equals(id)) {
+            updatedPerson.setId(id);
+            personRepository.save(updatedPerson);
+        }
     }
-    @Transactional
-    public void deleteById(Integer id){
-        personRepository.deleteById(id);
-    }
 
-
-
-
-
-
-//    public  List<Order> findByPerson(Integer id) {
-//        Optional<Person> person = personRepository.findById(id);
-//        if (person.isPresent())
-//            return person.get().getOrders();
-//        return null;
-//    }
-
-
-// не будет
-//    @Transactional
-//    public void save(Person person){
-//        personRepository.save(person);
-//    }
+        //???
 
 }

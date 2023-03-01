@@ -23,9 +23,6 @@ public class DressModel {
     @Column(name = "model")
     private String model;
 
-    @Column(name = "price")
-    private Integer price;
-
     @OneToMany(mappedBy = "dressModel", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Dress> dresses = new ArrayList<>();
 }

@@ -4,6 +4,7 @@ import lombok.*;
 import org.hibernate.mapping.Bag;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,13 +16,17 @@ import java.util.List;
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Table(name = "product")
-public class Product {
+public class Product implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
     private Integer id;
 
+    @Column(name = "quantity")
     private Integer quantity;
+
+    @Column(name = "price")
+    private Double price;
 
     @ManyToOne
     @JoinColumn(name="color_id")

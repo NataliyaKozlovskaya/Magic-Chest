@@ -16,7 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "person")
-public class Person implements Serializable {
+public class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -32,9 +32,13 @@ public class Person implements Serializable {
     @Enumerated(EnumType.STRING)//??? какой тип в бд?
     private EnumRole role;
 
-
     @OneToMany(mappedBy = "person", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Order> orders = new ArrayList<>();
+
+
+    //???????????????////
+    @OneToMany(mappedBy = "person", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PromoCode> promoCodes = new ArrayList<>();
 
 
 }

@@ -30,7 +30,6 @@ public class OrderService {
 
     public List<Order> findOrdersByPersonId(Integer personId){
         return orderRepository.findAllByPersonId(personId);
-
     }
 
     public Optional<Order> findById(Integer id){
