@@ -29,13 +29,9 @@ public class PersonService {
     public void register(Person person){
         person.setPassword(passwordEncoder.encode(person.getPassword()));
         person.setRole(EnumRole.USER);
-
         personRepository.save(person);
     }
 
-//    public void enrichPerson(Person person){
-//        person.setRole(EnumRole.USER);
-//    }
 
     public List<Person> findAll(){
         return personRepository.findAll();
@@ -45,20 +41,12 @@ public class PersonService {
         return personRepository.findById(id);
     }
 
-    public Optional<Person> findPersonById(Integer id){
-        return personRepository.findById(id);
-    }
 
     //for user как проверить , что он себя изменяет?
     @Transactional//ПЕРЕДЕЛАТЬ TODO:
-    public void update(Integer id, Person updatedPerson){
-        Integer updatedPersonId = updatedPerson.getId();
-        if(updatedPersonId.equals(id)) {
-            updatedPerson.setId(id);
-            personRepository.save(updatedPerson);
-        }
+    public void update(Integer id, Person person){
+        person.setId(id);
+        personRepository.save(person);
     }
-
-        //???
 
 }

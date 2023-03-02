@@ -1,6 +1,7 @@
 package com.magicchestcore.config.util;
 
 
+import com.magicchestcore.dto.PersonAuthDTO;
 import com.magicchestcore.dto.PersonDTO;
 import com.magicchestcore.servicies.PersonDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,15 +22,15 @@ public class PersonValidator implements Validator {
 
     @Override
     public boolean supports(Class<?> clazz) {
-        return PersonDTO.class.equals(clazz);
+        return PersonAuthDTO.class.equals(clazz);
     }
 
     @Override
     public void validate(Object target, Errors errors) {
 
-        PersonDTO personDTO = (PersonDTO) target;
+        PersonAuthDTO personAuthDTO = (PersonAuthDTO) target;
         try{
-            personDetailsService.loadUserByUsername(personDTO.getUsername());
+            personDetailsService.loadUserByUsername(personAuthDTO.getUsername());
         }catch (UsernameNotFoundException ignored){
             return;
         }

@@ -1,6 +1,7 @@
 package com.magicchestcore.controllers;
 
 import com.magicchestcore.config.util.PersonValidator;
+import com.magicchestcore.dto.PersonAuthDTO;
 import com.magicchestcore.dto.PersonDTO;
 import com.magicchestcore.models.Person;
 import com.magicchestcore.security.PersonDetails;
@@ -38,7 +39,7 @@ public class PersonController {
     }
 
 // for admin
-    @GetMapping("/admin")
+    @GetMapping
     public List<PersonDTO> findAll() {
         return personService.findAll().stream().map(this::convertToPersonDTO)
                 .collect(Collectors.toList());
@@ -48,13 +49,6 @@ public class PersonController {
 
     @GetMapping("/{id}")
     public ResponseEntity findById(@PathVariable("id") Integer id){
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        PersonDetails principal = (PersonDetails) authentication.getPrincipal();
-//        //personService.c
-//        Integer id1 = principal.getPerson().getId();
-//        if(!id1.equals(id)){
-//            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-//        }
         Optional<Person> person = personService.findById(id);
         if(person.isPresent()){
             PersonDTO personDTO = convertToPersonDTO(person.get());
@@ -64,11 +58,11 @@ public class PersonController {
         }
     }
 
-
+// заменить этот код на один метод
     //for admin
     @GetMapping("/admin/{id}")
-    public ResponseEntity findPersonById(@PathVariable("id") Integer id){
-        Optional<Person> person = personService.findPersonById(id);
+    public ResponseEntity findByIdAdmin(@PathVariable("id") Integer id){
+        Optional<Person> person = personService.findById(id);
         if(person.isPresent()){
             PersonDTO personDTO = convertToPersonDTO(person.get());
             return ResponseEntity.ok(personDTO);
@@ -79,20 +73,20 @@ public class PersonController {
 
 // for user
     @PostMapping("/registration")
-    public String create(@RequestBody @Valid PersonDTO personDTO, BindingResult bindingResult){
-        personValidator.validate(personDTO, bindingResult);
+    public String create(@RequestBody @Valid PersonAuthDTO personAuthDTO, BindingResult bindingResult){
+        personValidator.validate(personAuthDTO, bindingResult);
         if(bindingResult.hasErrors()){
             return bindingResult.toString();
         }
-        personService.register(convertToPerson(personDTO));
+        personService.register(convertToPerson(personAuthDTO));
         return "Регистрация прошла успешно";
     }
 
 
     // for user
     @PatchMapping("{id}")
-    public void update(@PathVariable("id") Integer id, @RequestBody PersonDTO updatePersonDTO){
-        personService.update(id, convertToPerson(updatePersonDTO));
+    public void update(@PathVariable("id") Integer id, @RequestBody PersonAuthDTO personAuthDTO){
+        personService.update(id, convertToPerson(personAuthDTO));
     }
 
 
@@ -112,6 +106,15 @@ public class PersonController {
     public PersonDTO convertToPersonDTO(Person person){
         return modelMapper.map(person, PersonDTO.class);
     }
+
+    public Person convertToPerson(PersonAuthDTO personAuthDTO){
+        return modelMapper.map(personAuthDTO, Person.class);
+    }
+
+    public PersonAuthDTO convertToPersonAuthDTO(Person person){
+        return modelMapper.map(person, PersonAuthDTO.class);
+    }
+
 
 }
 

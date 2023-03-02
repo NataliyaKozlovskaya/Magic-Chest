@@ -33,8 +33,8 @@ public class OrderController {
 
 
 
-    //??????
-    @GetMapping("/person/{personId}/order")//подумать нужен ли ?
+    //admin, user
+    @GetMapping("/person/{personId}/order")
     public List<OrderDTO> findOrdersByPersonId(@PathVariable("personId") Integer personId) {
         List<Order> ordersByPersonId = orderService.findOrdersByPersonId(personId);
         System.out.println("Test");
@@ -43,8 +43,8 @@ public class OrderController {
 
     }
 
-
-    @GetMapping("/order/{id}")//подумать нужен ли ?
+// admin, USER
+    @GetMapping("/order/{id}")
     public ResponseEntity findById(@PathVariable("id") Integer id) {
         Optional<Order> order = orderService.findById(id);
         if(order.isPresent()){
@@ -56,18 +56,20 @@ public class OrderController {
     }
 
 
-
-    // что делать с незаполненными полями ??
+    //user
     @PostMapping
     public void save(@RequestBody OrderDTO orderDTO){
        orderService.save(convertToOrder(orderDTO));
     }
 
-    @PatchMapping("/{id}")
-    public void update(@PathVariable("id") Integer id, @RequestBody OrderDTO updateOrderDTO) {
-        orderService.update(id, convertToOrder(updateOrderDTO));
-    }
+// не будет
+//    @PatchMapping("/{id}")
+//    public void update(@PathVariable("id") Integer id, @RequestBody OrderDTO updateOrderDTO) {
+//        orderService.update(id, convertToOrder(updateOrderDTO));
+//    }
 
+
+    //  user
     @DeleteMapping("/{id}")
     public void delete(@PathVariable("id") Integer id) {
         orderService.delete(id);

@@ -7,8 +7,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.CascadeType;
-import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,9 +17,9 @@ import java.util.List;
 public class PersonDTO {
 
     private Integer id;
-    private EnumRole role;
+    //private EnumRole role;
     private String username;
-    private String password;
+    //private String password;
 
     private List<PromoCodeDTO> promoCodes = new ArrayList<>();
 

@@ -28,6 +28,9 @@ public class Person {
     @Column(name="password")
     private String password;
 
+    @Column(name = "address")
+    private String address;
+
     @Column(name = "role")
     @Enumerated(EnumType.STRING)//??? какой тип в бд?
     private EnumRole role;
