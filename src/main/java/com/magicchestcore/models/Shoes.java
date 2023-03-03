@@ -19,6 +19,7 @@ public class Shoes extends Product {
 
     @ManyToOne
     @JoinColumn(name = "shoes_size_id")
-    private ShoesSize size;
+    private ShoesSize shoesSize;
+
 
 }

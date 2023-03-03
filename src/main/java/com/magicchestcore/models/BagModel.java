@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Setter
 @Getter
@@ -23,5 +25,6 @@ public class BagModel {
     @Column(name = "model")
     private String model;
 
-
+    @OneToMany(mappedBy = "bagModel", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Bag> bagList = new ArrayList<>();
 }

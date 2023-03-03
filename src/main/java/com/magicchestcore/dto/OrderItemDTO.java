@@ -19,8 +19,8 @@ import java.io.Serializable;
 
 public class OrderItemDTO {
 
-    private Order order;
-    private Product product;
+    //private OrderDTO orderDTO;
+    private ProductDTO product;
     private Integer price;
     private Integer quantity;
 

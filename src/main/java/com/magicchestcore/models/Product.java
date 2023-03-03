@@ -22,6 +22,9 @@ public class Product implements Serializable {
     @Column(name="id")
     private Integer id;
 
+    @Column(name="name")
+    private String name;
+
     @Column(name = "quantity")
     private Integer quantity;
 
@@ -47,6 +50,14 @@ public class Product implements Serializable {
     @ManyToOne
     @JoinColumn(name="dress_size_id")
     private DressSize dressSize;
+
+    @ManyToOne
+    @JoinColumn(name="shoes_size_id")
+    private ShoesSize shoesSize;
+
+    @ManyToOne
+    @JoinColumn(name="bag_size_id")
+    private BagSize bagSize;
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrderItem> orderItemList=new ArrayList<>();

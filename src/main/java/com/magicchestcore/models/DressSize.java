@@ -26,6 +26,6 @@ public class DressSize {
     private Integer size;
 
     @OneToMany(mappedBy = "dressSize", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Dress> dresses = new ArrayList<>();
+    private List<Dress> dressList = new ArrayList<>();
 
 }

@@ -16,7 +16,6 @@ public class Dress extends Product {
     @JoinColumn(name = "dress_model_id")
     private DressModel dressModel;
 
-
     @ManyToOne
     @JoinColumn(name = "dress_size_id")
     private DressSize dressSize;

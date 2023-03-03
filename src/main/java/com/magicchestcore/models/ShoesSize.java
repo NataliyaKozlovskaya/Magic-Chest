@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Setter
 @Getter
@@ -22,4 +24,7 @@ public class ShoesSize {
 
     @Column(name = "size")
     private Integer size;
+
+    @OneToMany(mappedBy = "shoesSize", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Shoes> shoesList = new ArrayList<>();
 }

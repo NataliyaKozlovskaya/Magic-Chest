@@ -36,8 +36,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .authorizeRequests()
                         .antMatchers("/person","/person/admin/{id}",
-                                "/order", "/order/{id}",
-                                "/person/{personId}/order", "/order/{id}").hasAuthority("ADMIN")
+                                "/order", "/order/{id}","/person/{personId}/order", "/order/{id}",
+                                "/admin/**",
+                                "/dressModel/admin/**", "/dressSize/admin/**",
+                                "/color/admin/**").hasAuthority("ADMIN")
 
                         .antMatchers("/person/registration").permitAll()
                         .antMatchers(HttpMethod.GET,"/person/{id}").access("@guard.checkUserId(authentication,#id)")

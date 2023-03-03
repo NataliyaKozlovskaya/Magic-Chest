@@ -62,12 +62,6 @@ public class OrderController {
        orderService.save(convertToOrder(orderDTO));
     }
 
-// не будет
-//    @PatchMapping("/{id}")
-//    public void update(@PathVariable("id") Integer id, @RequestBody OrderDTO updateOrderDTO) {
-//        orderService.update(id, convertToOrder(updateOrderDTO));
-//    }
-
 
     //  user
     @DeleteMapping("/{id}")

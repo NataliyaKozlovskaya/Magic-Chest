@@ -1,7 +1,5 @@
 package com.magicchestcore.models;
-
 import lombok.*;
-
 import javax.persistence.*;
 
 @Setter
@@ -10,6 +8,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @ToString
 @Entity
+@Table(name = "bag")
 public class Bag extends Product {
 
     @ManyToOne
@@ -19,6 +18,6 @@ public class Bag extends Product {
 
     @ManyToOne
     @JoinColumn(name = "bag_size_id")
-    private BagSize size;
+    private BagSize bagSize;
 
 }

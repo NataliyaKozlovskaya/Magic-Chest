@@ -26,5 +26,5 @@ public class Color {
     private String color;
 
     @OneToMany(mappedBy = "color", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Product> products = new ArrayList<>();
+    private List<Product> productsList = new ArrayList<>();
 }
