@@ -33,13 +33,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected  void configure(HttpSecurity http) throws Exception{
         http
-                .csrf().disable()
+                .csrf().disable()// сначаа админ потом продукт
                 .authorizeRequests()
                         .antMatchers("/person","/person/admin/{id}",
                                 "/order", "/order/{id}","/person/{personId}/order", "/order/{id}",
                                 "/admin/**",
                                 "/dressModel/admin/**", "/dressSize/admin/**",
-                                "/color/admin/**").hasAuthority("ADMIN")
+                                "/color/admin/**", "/product/admin/**").hasAuthority("ADMIN")
 
                         .antMatchers("/person/registration").permitAll()
                         .antMatchers(HttpMethod.GET,"/person/{id}").access("@guard.checkUserId(authentication,#id)")
@@ -48,7 +48,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         .antMatchers(HttpMethod.GET,"/order/{id}").access("@guard.checkUserId(authentication,#id)")
                         .antMatchers(HttpMethod.DELETE,"/{id}").access("@guard.checkUserId(authentication,#id)")
 
-                        //.antMatchers(HttpMethod.GET, "/person/{id}").access(("@guard.checkUserId(authentication, #id)")
+
                         .anyRequest().authenticated()
                 .and()
                 .httpBasic(withDefaults());

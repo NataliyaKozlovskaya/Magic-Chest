@@ -1,7 +1,12 @@
 package com.magicchestcore.controllers;
 
+import com.magicchestcore.config.util.Convert;
+import com.magicchestcore.config.util.ProductType;
 import com.magicchestcore.dto.ProductDTO;
+import com.magicchestcore.models.Bag;
+import com.magicchestcore.models.Dress;
 import com.magicchestcore.models.Product;
+import com.magicchestcore.models.Shoes;
 import com.magicchestcore.servicies.ProductService;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
@@ -11,13 +16,19 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static com.magicchestcore.config.util.Convert.*;
+import static jdk.internal.vm.vector.VectorSupport.convert;
+
 @RestController
 @RequestMapping("/product")
 public class ProductController {
     private final ProductService productService;
+    private final Convert convert;
+
     private final ModelMapper modelMapper;
-    public ProductController(ProductService productService, ModelMapper modelMapper) {
+    public ProductController(ProductService productService, Convert convert, ModelMapper modelMapper) {
         this.productService = productService;
+        this.convert = convert;
         this.modelMapper = modelMapper;
     }
 
@@ -43,12 +54,16 @@ public class ProductController {
 
     // admin
     @PostMapping("/admin")
-    public void save(@RequestBody ProductDTO product){
-       productService.save(convertToProduct(product));
+    public void save(@RequestBody ProductDTO productDTO) {
+
+        convert.convert1(productDTO);
+        productService.save();
     }
 
+
+
     // admin
-    @PatchMapping("/admin/{id}")
+    @PatchMapping("/admin/{id}")//КОНВЕРТИРОВАТЬ
     public void update(@PathVariable("id") Integer id, @RequestBody ProductDTO updateProduct) {
         productService.update(id, convertToProduct(updateProduct));
     }

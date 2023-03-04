@@ -1,7 +1,6 @@
 package com.magicchestcore.models;
 
 import lombok.*;
-import org.hibernate.mapping.Bag;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -60,5 +59,5 @@ public class Product implements Serializable {
     private BagSize bagSize;
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<OrderItem> orderItemList=new ArrayList<>();
+    private List<OrderItem> orderItemList = new ArrayList<>();
 }

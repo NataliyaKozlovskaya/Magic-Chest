@@ -60,6 +60,7 @@ public class DressModelController {
     public void delete(@PathVariable("id") Integer id) {
         dressModelService.delete(id);
     }
+
     public DressModel convertToDressModel(DressModelDTO dressModelDTO){
         return modelMapper.map(dressModelDTO, DressModel.class);
     }

@@ -45,4 +45,7 @@ public class DressService {
     public void delete(Integer id){
         dressRepository.deleteById(id);
     }
+
+
+
 }
