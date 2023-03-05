@@ -1,5 +1,6 @@
 package com.magicchestcore.controllers;
 
+import com.magicchestcore.config.util.Converter;
 import com.magicchestcore.config.util.PersonValidator;
 import com.magicchestcore.dto.PersonAuthDTO;
 import com.magicchestcore.dto.PersonDTO;
@@ -8,9 +9,7 @@ import com.magicchestcore.security.PersonDetails;
 import com.magicchestcore.servicies.PersonService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.BindingResult;
@@ -27,21 +26,19 @@ public class PersonController {
 
     private final PersonService personService;
     private final PersonValidator personValidator;
-    private final ModelMapper modelMapper;
-    //private final G
+    private final Converter converter;
 
     @Autowired
-    public PersonController(PersonService personService,
-                            PersonValidator personValidator, ModelMapper modelMapper) {
+    public PersonController(PersonService personService, PersonValidator personValidator, Converter converter) {
         this.personService = personService;
         this.personValidator = personValidator;
-        this.modelMapper = modelMapper;
+        this.converter = converter;
     }
 
 // for admin
     @GetMapping
     public List<PersonDTO> findAll() {
-        return personService.findAll().stream().map(this::convertToPersonDTO)
+        return personService.findAll().stream().map(converter::convertToPersonDTO)
                 .collect(Collectors.toList());
     }
 
@@ -51,20 +48,20 @@ public class PersonController {
     public ResponseEntity findById(@PathVariable("id") Integer id){
         Optional<Person> person = personService.findById(id);
         if(person.isPresent()){
-            PersonDTO personDTO = convertToPersonDTO(person.get());
+            PersonDTO personDTO = converter.convertToPersonDTO(person.get());
             return ResponseEntity.ok(personDTO);
         }else {
             return ResponseEntity.notFound().build();
         }
     }
 
-// заменить этот код на один метод
+// заменить этот код на один метод - ?
     //for admin
     @GetMapping("/admin/{id}")
     public ResponseEntity findByIdAdmin(@PathVariable("id") Integer id){
         Optional<Person> person = personService.findById(id);
         if(person.isPresent()){
-            PersonDTO personDTO = convertToPersonDTO(person.get());
+            PersonDTO personDTO = converter.convertToPersonDTO(person.get());
             return ResponseEntity.ok(personDTO);
         }else {
             return ResponseEntity.notFound().build();
@@ -78,7 +75,7 @@ public class PersonController {
         if(bindingResult.hasErrors()){
             return bindingResult.toString();
         }
-        personService.register(convertToPerson(personAuthDTO));
+        personService.register(converter.convertToPerson(personAuthDTO));
         return "Регистрация прошла успешно";
     }
 
@@ -86,7 +83,7 @@ public class PersonController {
     // for user
     @PatchMapping("{id}")
     public void update(@PathVariable("id") Integer id, @RequestBody PersonAuthDTO personAuthDTO){
-        personService.update(id, convertToPerson(personAuthDTO));
+        personService.update(id, converter.convertToPerson(personAuthDTO));
     }
 
 
@@ -97,22 +94,6 @@ public class PersonController {
         PersonDetails principal = (PersonDetails) authentication.getPrincipal();
         System.out.println(principal.getPerson());
         return (principal.getPerson());
-    }
-
-    public Person convertToPerson(PersonDTO personDTO){
-        return modelMapper.map(personDTO, Person.class);
-    }
-
-    public PersonDTO convertToPersonDTO(Person person){
-        return modelMapper.map(person, PersonDTO.class);
-    }
-
-    public Person convertToPerson(PersonAuthDTO personAuthDTO){
-        return modelMapper.map(personAuthDTO, Person.class);
-    }
-
-    public PersonAuthDTO convertToPersonAuthDTO(Person person){
-        return modelMapper.map(person, PersonAuthDTO.class);
     }
 
 

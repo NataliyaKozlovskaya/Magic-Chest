@@ -3,7 +3,6 @@ package com.magicchestcore.servicies;
 import com.magicchestcore.models.Dress;
 import com.magicchestcore.repositories.DressRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -45,7 +44,6 @@ public class DressService {
     public void delete(Integer id){
         dressRepository.deleteById(id);
     }
-
 
 
 }

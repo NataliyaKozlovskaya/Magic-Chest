@@ -15,5 +15,5 @@ public class DressSizeDTO {
     private Integer id;
     private Integer size;
 
-//    private List<Dress> dressList = new ArrayList<>();
+//    private List<DressDTO> dressList = new ArrayList<>();
 }

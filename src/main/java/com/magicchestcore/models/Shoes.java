@@ -12,14 +12,15 @@ import javax.persistence.*;
 @Entity
 public class Shoes extends Product {
 
+    @Column(name="name")
+    private String name;
+
     @ManyToOne
     @JoinColumn(name = "shoes_model_id")
     private ShoesModel shoesModel;
 
-
     @ManyToOne
     @JoinColumn(name = "shoes_size_id")
     private ShoesSize shoesSize;
-
 
 }

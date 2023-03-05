@@ -11,6 +11,9 @@ import javax.persistence.*;
 @Table(name = "bag")
 public class Bag extends Product {
 
+    @Column(name="name")
+    private String name;
+
     @ManyToOne
     @JoinColumn(name = "bag_model_id")
     private BagModel bagModel;

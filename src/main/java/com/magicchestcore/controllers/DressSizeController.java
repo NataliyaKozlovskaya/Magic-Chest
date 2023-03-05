@@ -1,9 +1,9 @@
 package com.magicchestcore.controllers;
 
+import com.magicchestcore.config.util.Converter;
 import com.magicchestcore.dto.DressSizeDTO;
 import com.magicchestcore.models.DressSize;
 import com.magicchestcore.servicies.DressSizeService;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,16 +16,17 @@ import java.util.stream.Collectors;
 @RequestMapping("/dressSize")
 public class DressSizeController {
     private final DressSizeService dressSizeService;
-    private final ModelMapper modelMapper;
+    private final Converter converter;
     @Autowired
-    public DressSizeController(DressSizeService dressSizeService, ModelMapper modelMapper) {
+    public DressSizeController(DressSizeService dressSizeService, Converter converter) {
         this.dressSizeService = dressSizeService;
-        this.modelMapper = modelMapper;
+        this.converter = converter;
     }
+
 // admin, user
     @GetMapping
     public List <DressSizeDTO> findAll() {
-        return dressSizeService.findAll().stream().map(this::convertToDressSizeDTO)
+        return dressSizeService.findAll().stream().map(converter::convertToDressSizeDTO)
                 .collect(Collectors.toList());
     }
 // admin, user
@@ -33,7 +34,7 @@ public class DressSizeController {
     public ResponseEntity findById(@PathVariable("id") Integer id) {
         Optional<DressSize> dressSize = dressSizeService.findById(id);
         if(dressSize.isPresent()){
-            DressSizeDTO dressSizeDTO = convertToDressSizeDTO(dressSize.get());
+            DressSizeDTO dressSizeDTO = converter.convertToDressSizeDTO(dressSize.get());
             return ResponseEntity.ok(dressSizeDTO);
         }else {
             return ResponseEntity.notFound().build();
@@ -42,14 +43,14 @@ public class DressSizeController {
 
     // admin
     @PostMapping("/admin")
-    public void save(@RequestBody DressSize dressSize){
-        dressSizeService.save(dressSize);
+    public void save(@RequestBody DressSizeDTO dressSizeDTO){
+        dressSizeService.save(converter.convertToDressSize(dressSizeDTO));
     }
 
     // admin
     @PatchMapping("/admin/{id}")
-    public void update(@PathVariable("id") Integer id, @RequestBody DressSizeDTO updateDressSize) {
-        dressSizeService.update(id, convertToDressSize(updateDressSize));
+    public void update(@PathVariable("id") Integer id, @RequestBody DressSizeDTO updateDressSizeDTO) {
+        dressSizeService.update(id, converter.convertToDressSize(updateDressSizeDTO));
     }
 
     // admin
@@ -57,14 +58,5 @@ public class DressSizeController {
     public void delete(@PathVariable("id") Integer id) {
         dressSizeService.delete(id);
     }
-
-    public DressSize convertToDressSize(DressSizeDTO dressSizeDTO){
-        return modelMapper.map(dressSizeDTO,DressSize.class);
-    }
-
-    public DressSizeDTO convertToDressSizeDTO(DressSize dressSize){
-        return modelMapper.map(dressSize, DressSizeDTO.class);
-    }
-
 
 }

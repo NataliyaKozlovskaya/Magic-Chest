@@ -1,13 +1,10 @@
 package com.magicchestcore.controllers;
 
+import com.magicchestcore.config.util.Converter;
 import com.magicchestcore.dto.DressModelDTO;
-import com.magicchestcore.dto.PersonDTO;
 import com.magicchestcore.models.DressModel;
-import com.magicchestcore.models.Person;
 import com.magicchestcore.servicies.DressModelService;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,16 +16,16 @@ import java.util.stream.Collectors;
 @RequestMapping("/dressModel")
 public class DressModelController {
     private final DressModelService dressModelService;
-    private final ModelMapper modelMapper;
+    private final Converter converter;
     @Autowired
-    public DressModelController(DressModelService dressModelService, ModelMapper modelMapper) {
+    public DressModelController(DressModelService dressModelService, Converter converter) {
         this.dressModelService = dressModelService;
-        this.modelMapper = modelMapper;
+        this.converter = converter;
     }
 
     @GetMapping
     public List <DressModelDTO> findAll() {
-        return dressModelService.findAll().stream().map(this::convertToDressModelDTO)
+        return dressModelService.findAll().stream().map(converter::convertToDressModelDTO)
                 .collect(Collectors.toList());
     }
 
@@ -36,7 +33,7 @@ public class DressModelController {
     public ResponseEntity findById(@PathVariable("id") Integer id) {
         Optional<DressModel> dressModel = dressModelService.findById(id);
         if(dressModel.isPresent()){
-            DressModelDTO dressModelDTO = convertToDressModelDTO(dressModel.get());
+            DressModelDTO dressModelDTO = converter.convertToDressModelDTO(dressModel.get());
             return ResponseEntity.ok(dressModelDTO);
         }else {
             return ResponseEntity.notFound().build();
@@ -45,14 +42,14 @@ public class DressModelController {
 
     // admin
     @PostMapping("/admin")
-    public void save(@RequestBody DressModelDTO dressModel){
-       dressModelService.save(convertToDressModel(dressModel));
+    public void save(@RequestBody DressModelDTO dressModelDTO){
+       dressModelService.save(converter.convertToDressModel(dressModelDTO));
     }
 
     // admin
     @PatchMapping("/admin/{id}")
-    public void update(@PathVariable("id") Integer id, @RequestBody DressModelDTO updateDressModel) {
-        dressModelService.update(id, convertToDressModel(updateDressModel));
+    public void update(@PathVariable("id") Integer id, @RequestBody DressModelDTO updateDressModelDTO) {
+        dressModelService.update(id, converter.convertToDressModel(updateDressModelDTO));
     }
 
     // admin
@@ -60,15 +57,6 @@ public class DressModelController {
     public void delete(@PathVariable("id") Integer id) {
         dressModelService.delete(id);
     }
-
-    public DressModel convertToDressModel(DressModelDTO dressModelDTO){
-        return modelMapper.map(dressModelDTO, DressModel.class);
-    }
-
-    public DressModelDTO convertToDressModelDTO(DressModel dressModel){
-        return modelMapper.map(dressModel, DressModelDTO.class);
-    }
-
 
 
 }

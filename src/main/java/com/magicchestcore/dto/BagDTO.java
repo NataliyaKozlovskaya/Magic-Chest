@@ -9,9 +9,10 @@ import lombok.Setter;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class DressDTO {
+public class BagDTO {
 
     private String name;
-    private DressModelDTO dressModelDTO;
-    private DressSizeDTO dressSizeDTO;
+    private BagModelDTO bagModelDTO;
+    private BagSizeDTO bagSizeDTO;
+
 }

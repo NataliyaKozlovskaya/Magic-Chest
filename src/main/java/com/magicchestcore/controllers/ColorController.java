@@ -1,11 +1,9 @@
 package com.magicchestcore.controllers;
 
+import com.magicchestcore.config.util.Converter;
 import com.magicchestcore.dto.ColorDTO;
-import com.magicchestcore.dto.DressSizeDTO;
 import com.magicchestcore.models.Color;
-import com.magicchestcore.models.DressSize;
 import com.magicchestcore.servicies.ColorService;
-import com.magicchestcore.servicies.DressSizeService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,16 +17,17 @@ import java.util.stream.Collectors;
 @RequestMapping("/color")
 public class ColorController {
     private final ColorService colorService;
-    private final ModelMapper modelMapper;
+    private final Converter converter;
     @Autowired
-    public ColorController(ColorService colorService, ModelMapper modelMapper) {
+    public ColorController(ColorService colorService, Converter converter) {
         this.colorService = colorService;
-        this.modelMapper = modelMapper;
+        this.converter = converter;
     }
+
 // admin, user
     @GetMapping
     public List <ColorDTO> findAll() {
-        return colorService.findAll().stream().map(this::convertToColorDTO)
+        return colorService.findAll().stream().map(converter::convertToColorDTO)
                 .collect(Collectors.toList());
     }
 // admin, user
@@ -36,7 +35,7 @@ public class ColorController {
     public ResponseEntity findById(@PathVariable("id") Integer id) {
         Optional<Color> color = colorService.findById(id);
         if(color.isPresent()){
-            ColorDTO colorDTO = convertToColorDTO(color.get());
+            ColorDTO colorDTO = converter.convertToColorDTO(color.get());
             return ResponseEntity.ok(colorDTO);
         }else {
             return ResponseEntity.notFound().build();
@@ -45,14 +44,14 @@ public class ColorController {
 
     // admin
     @PostMapping("/admin")
-    public void save(@RequestBody Color color){
-        colorService.save(color);
+    public void save(@RequestBody ColorDTO colorDTO){
+        colorService.save(converter.convertToColor(colorDTO));
     }
 
     // admin
     @PatchMapping("/admin/{id}")
-    public void update(@PathVariable("id") Integer id, @RequestBody ColorDTO updateColor) {
-        colorService.update(id, convertToColor(updateColor));
+    public void update(@PathVariable("id") Integer id, @RequestBody ColorDTO updateColorDTO) {
+        colorService.update(id, converter.convertToColor(updateColorDTO));
     }
 
     // admin
@@ -60,14 +59,5 @@ public class ColorController {
     public void delete(@PathVariable("id") Integer id) {
         colorService.delete(id);
     }
-
-    public Color convertToColor(ColorDTO colorDTO){
-        return modelMapper.map(colorDTO, Color.class);
-    }
-
-    public ColorDTO convertToColorDTO(Color color){
-        return modelMapper.map(color, ColorDTO.class);
-    }
-
 
 }
