@@ -1,5 +1,6 @@
 package com.magicchestcore.servicies;
 
+import com.magicchestcore.config.util.ProductType;
 import com.magicchestcore.models.Product;
 import com.magicchestcore.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,12 @@ public class ProductService {
         return productRepository.findAll();
     }
 
+    public List<Product> findAllByDtype(String dtype){
+        List<Product> allByProductType = productRepository.findAllByDtype(dtype);
+
+        System.out.println(allByProductType.get(0).getDtype());
+        return allByProductType;
+    }
 
     public Optional<Product> findById(Integer id){
         return productRepository.findById(id);

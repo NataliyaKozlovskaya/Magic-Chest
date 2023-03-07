@@ -39,14 +39,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                                 "/order", "/order/{id}","/person/{personId}/order", "/order/{id}",
                                 "/admin/**",
                                 "/dressModel/admin/**", "/dressSize/admin/**",
-                                "/color/admin/**", "/product/admin/**").hasAuthority("ADMIN")
+                                "/color/admin/**", "/product/admin").hasAuthority("ADMIN")
 
                         .antMatchers("/person/registration").permitAll()
-                        .antMatchers(HttpMethod.GET,"/person/{id}").access("@guard.checkUserId(authentication,#id)")
-                        .antMatchers(HttpMethod.PATCH,"/person/{id}").access("@guard.checkUserId(authentication,#id)")
-                        .antMatchers(HttpMethod.GET,"/person/{personId}/order").access("@guard.checkUserId(authentication,#id)")
-                        .antMatchers(HttpMethod.GET,"/order/{id}").access("@guard.checkUserId(authentication,#id)")
-                        .antMatchers(HttpMethod.DELETE,"/{id}").access("@guard.checkUserId(authentication,#id)")
+//                        .antMatchers(HttpMethod.GET,"/person/{id}").access("@guard.checkUserId(authentication,#id)")
+//                        .antMatchers(HttpMethod.PATCH,"/person/{id}").access("@guard.checkUserId(authentication,#id)")
+//                        .antMatchers(HttpMethod.GET,"/person/{personId}/order").access("@guard.checkUserId(authentication,#id)")
+//                        .antMatchers(HttpMethod.GET,"/order/{id}").access("@guard.checkUserId(authentication,#id)")
+//                        .antMatchers(HttpMethod.DELETE,"/{id}").access("@guard.checkUserId(authentication,#id)")
 
 
                         .anyRequest().authenticated()

@@ -1,18 +1,16 @@
 package com.magicchestcore.controllers;
 
 import com.magicchestcore.config.util.Converter;
+import com.magicchestcore.config.util.ProductType;
 import com.magicchestcore.dto.ProductDTO;
 import com.magicchestcore.models.Product;
 import com.magicchestcore.servicies.ProductService;
-import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
 
 @RestController
 @RequestMapping("/product")
@@ -26,9 +24,12 @@ public class ProductController {
 
 // user, admin
     @GetMapping
-    public List<ProductDTO> findAll() {
-        return productService.findAll().stream().map(converter::convertToProductDTO).collect(Collectors.toList());
-        //return productService.findAll().stream().map(product->converter.convertToProductDTO(product)).collect(Collectors.toList());
+    public List<ProductDTO> findAll(@RequestParam(value = "dtype", required = false) String dtype) {
+        if(dtype==null){
+            return productService.findAll().stream().map(converter::convertToProductDTO).collect(Collectors.toList());
+        }else{
+          return productService.findAllByDtype(dtype).stream().map(converter::convertToProductDTO).collect(Collectors.toList());
+        }
     }
 
 
@@ -52,8 +53,8 @@ public class ProductController {
 
     // admin
     @PatchMapping("/admin/{id}")
-    public void update(@PathVariable("id") Integer id, @RequestBody ProductDTO updateProduct) {
-        productService.update(id, converter.convertToProduct(updateProduct));
+    public void update(@PathVariable("id") Integer id, @RequestBody ProductDTO updateProductDTO) {
+        productService.update(id, converter.convertToProduct(updateProductDTO));
     }
 
     // admin

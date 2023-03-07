@@ -1,6 +1,7 @@
 package com.magicchestcore.servicies;
 
 import com.magicchestcore.config.util.EnumRole;
+import com.magicchestcore.dto.PersonAuthDTO;
 import com.magicchestcore.dto.PersonDTO;
 import com.magicchestcore.models.Person;
 import com.magicchestcore.repositories.PersonRepository;
@@ -26,11 +27,13 @@ public class PersonService {
     }
 
     @Transactional
-    public void register(Person person){
+    public Person register(Person person){
         person.setPassword(passwordEncoder.encode(person.getPassword()));
         person.setRole(EnumRole.USER);
-        personRepository.save(person);
+        Person savedPerson = personRepository.save(person);
+        return savedPerson;
     }
+
 
 
     public List<Person> findAll(){
@@ -43,10 +46,19 @@ public class PersonService {
 
 
     //for user как проверить , что он себя изменяет?
+    //НЕ НРАВИТСЯ ЧТО КАК В СОХРАНЕНИИ ЗАНОВО НАДО НАЗНАЧАТЬ
     @Transactional//ПЕРЕДЕЛАТЬ TODO:
-    public void update(Integer id, Person person){
-        person.setId(id);
+    public void update(Integer id, PersonAuthDTO personAuthDTO){
+      Person person = personRepository.getById(id);
+      if(personAuthDTO.getUsername() != null){
+          person.setUsername(personAuthDTO.getUsername());
+      }
+        if(personAuthDTO.getPassword() != null){
+            person.setPassword(passwordEncoder.encode(personAuthDTO.getPassword()));
+        }
+        if(personAuthDTO.getAddress() != null) {
+            person.setAddress(personAuthDTO.getAddress());
+        }
         personRepository.save(person);
     }
-
 }

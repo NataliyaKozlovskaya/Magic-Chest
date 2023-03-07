@@ -17,9 +17,11 @@ import java.util.List;
 public class PersonDTO {
 
     private Integer id;
-    //private EnumRole role;
     private String username;
+
+
     //private String password;
+    //private EnumRole role;
 
     private List<PromoCodeDTO> promoCodes = new ArrayList<>();
 

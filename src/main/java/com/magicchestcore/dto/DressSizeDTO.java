@@ -5,6 +5,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 @Setter
 @Getter
@@ -15,5 +18,4 @@ public class DressSizeDTO {
     private Integer id;
     private Integer size;
 
-//    private List<DressDTO> dressList = new ArrayList<>();
 }

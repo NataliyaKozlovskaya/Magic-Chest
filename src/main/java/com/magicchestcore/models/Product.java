@@ -1,5 +1,6 @@
 package com.magicchestcore.models;
 
+import com.magicchestcore.config.util.ProductType;
 import lombok.*;
 
 import javax.persistence.*;
@@ -20,6 +21,9 @@ public class Product implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
     private Integer id;
+
+    @Column(name="DTYPE", insertable = false, updatable = false)
+    private String dtype;
 
     @Column(name="name")
     private String name;

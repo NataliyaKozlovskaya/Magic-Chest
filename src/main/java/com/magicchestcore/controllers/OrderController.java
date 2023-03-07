@@ -42,7 +42,7 @@ public class OrderController {
 
 // admin, USER
     @GetMapping("/order/{id}")
-    public ResponseEntity findById(@PathVariable("id") Integer id) {
+    public ResponseEntity<OrderDTO> findById(@PathVariable("id") Integer id) {
         Optional<Order> order = orderService.findById(id);
         if(order.isPresent()){
             OrderDTO orderDTO = converter.convertToOrderDTO(order.get());

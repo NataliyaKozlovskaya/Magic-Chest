@@ -12,7 +12,7 @@ import lombok.Setter;
 public class BagDTO {
 
     private String name;
-    private BagModelDTO bagModelDTO;
-    private BagSizeDTO bagSizeDTO;
+    private BagModelDTO bagModel;
+    private BagSizeDTO bagSize;
 
 }

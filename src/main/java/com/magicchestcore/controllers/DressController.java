@@ -45,13 +45,14 @@ public class DressController {
     }
 
     // admin
-    @PostMapping
+    // СОЗДАВАТЬ НОВОЕ НЕ НАДО!!! НЕ ВСЕХ ПАРАМЕТРОВ ХВАТАЕТ. СОЗДАВАТЬ И ИЗМЕНЯТЬ (УДАЛЯТЬ?) НАДО ЧЕРЕЗ ПРОДУКТ
+    @PostMapping("/admin")
     public void save(@RequestBody DressDTO dressDTO){
        dressService.save(converter.convertToDress(dressDTO));
     }
 
     // admin
-    @PatchMapping("/{id}")
+    @PatchMapping("/admin/{id}")
     public void update(@PathVariable("id") Integer id, @RequestBody DressDTO updateDressDTO) {
         dressService.update(id, converter.convertToDress(updateDressDTO));
     }

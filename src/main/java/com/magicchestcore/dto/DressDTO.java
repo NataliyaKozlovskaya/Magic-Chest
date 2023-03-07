@@ -12,6 +12,7 @@ import lombok.Setter;
 public class DressDTO {
 
     private String name;
-    private DressModelDTO dressModelDTO;
-    private DressSizeDTO dressSizeDTO;
+    private DressModelDTO dressModel;
+    private DressSizeDTO dressSize;
+
 }

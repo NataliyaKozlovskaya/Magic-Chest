@@ -33,7 +33,7 @@ public class ProductDTO {
     private BagModelDTO bagModel;
     private BagSizeDTO bagSize;
 
-    private List<OrderItemDTO> orderItemList = new ArrayList<>();
+   // private List<OrderItemDTO> orderItemList = new ArrayList<>();
 
 
 

@@ -7,8 +7,8 @@ import com.magicchestcore.dto.PersonDTO;
 import com.magicchestcore.models.Person;
 import com.magicchestcore.security.PersonDetails;
 import com.magicchestcore.servicies.PersonService;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -37,15 +37,16 @@ public class PersonController {
 
 // for admin
     @GetMapping
-    public List<PersonDTO> findAll() {
-        return personService.findAll().stream().map(converter::convertToPersonDTO)
-                .collect(Collectors.toList());
+    public ResponseEntity<List<PersonDTO>> findAll() {
+        List<Person> people = personService.findAll();
+        List<PersonDTO> collect = people.stream().map(converter::convertToPersonDTO).collect(Collectors.toList());
+        return ResponseEntity.ok(collect);
     }
 
     // for user
 
     @GetMapping("/{id}")
-    public ResponseEntity findById(@PathVariable("id") Integer id){
+    public ResponseEntity<PersonDTO> findById(@PathVariable("id") Integer id){
         Optional<Person> person = personService.findById(id);
         if(person.isPresent()){
             PersonDTO personDTO = converter.convertToPersonDTO(person.get());
@@ -55,10 +56,9 @@ public class PersonController {
         }
     }
 
-// заменить этот код на один метод - ?
     //for admin
     @GetMapping("/admin/{id}")
-    public ResponseEntity findByIdAdmin(@PathVariable("id") Integer id){
+    public ResponseEntity<?> findByIdAdmin(@PathVariable("id") Integer id){
         Optional<Person> person = personService.findById(id);
         if(person.isPresent()){
             PersonDTO personDTO = converter.convertToPersonDTO(person.get());
@@ -70,20 +70,21 @@ public class PersonController {
 
 // for user
     @PostMapping("/registration")
-    public String create(@RequestBody @Valid PersonAuthDTO personAuthDTO, BindingResult bindingResult){
+    public ResponseEntity<?> create(@RequestBody @Valid PersonAuthDTO personAuthDTO, BindingResult bindingResult){
         personValidator.validate(personAuthDTO, bindingResult);
         if(bindingResult.hasErrors()){
-            return bindingResult.toString();
+            return new ResponseEntity<>(bindingResult.toString(), HttpStatus.CONFLICT);
         }
-        personService.register(converter.convertToPerson(personAuthDTO));
-        return "Регистрация прошла успешно";
+        Person person = personService.register(converter.convertToPerson(personAuthDTO));
+        PersonAuthDTO registeredPerson = converter.convertToPersonAuthDTO(person);
+        return ResponseEntity.ok(registeredPerson);
     }
 
 
     // for user
     @PatchMapping("{id}")
     public void update(@PathVariable("id") Integer id, @RequestBody PersonAuthDTO personAuthDTO){
-        personService.update(id, converter.convertToPerson(personAuthDTO));
+        personService.update(id, personAuthDTO);
     }
 
 
