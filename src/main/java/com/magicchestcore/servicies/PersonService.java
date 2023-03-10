@@ -29,6 +29,7 @@ public class PersonService {
     public Person register(Person person){
         person.setPassword(passwordEncoder.encode(person.getPassword()));
         person.setRole(EnumRole.USER);
+        person.setAccountNonLocked(true);
         Person savedPerson = personRepository.save(person);
         return savedPerson;
     }

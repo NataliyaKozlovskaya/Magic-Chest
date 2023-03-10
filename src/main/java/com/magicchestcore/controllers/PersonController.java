@@ -5,7 +5,6 @@ import com.magicchestcore.config.util.PersonValidator;
 import com.magicchestcore.dto.PersonAuthDTO;
 import com.magicchestcore.dto.PersonDTO;
 import com.magicchestcore.models.Person;
-import com.magicchestcore.security.PersonDetails;
 import com.magicchestcore.servicies.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -88,13 +87,21 @@ public class PersonController {
     }
 
 
+    public ResponseEntity<?> lockPerson(Integer id){
+        Optional<Person> person = personService.findById(id);
+        person.ifPresent(value -> value.setAccountNonLocked(false));
+        return ResponseEntity.ok().build();
+    }
+
+
+
     // Надо ли это оставлять  ?
     @GetMapping("/showPersonInfo")
     public Person showPersonInfo(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        PersonDetails principal = (PersonDetails) authentication.getPrincipal();
-        System.out.println(principal.getPerson());
-        return (principal.getPerson());
+        Person principal = (Person) authentication.getPrincipal();
+        System.out.println(principal);
+        return principal;
     }
 
 

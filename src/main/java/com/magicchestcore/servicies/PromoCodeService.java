@@ -36,15 +36,15 @@ public class PromoCodeService {
     public void save(PromoCode promoCode){
         promoCodeRepository.save(promoCode);
     }
-
-    @Transactional
-    public void update(Integer id, Order upDateOrder){
-        upDateOrder.setId(id);
-        orderRepository.save(upDateOrder);
-    }
-
-    @Transactional
-    public void delete(Integer id){
-        orderRepository.deleteById(id);
-    }
+//
+//    @Transactional
+//    public void update(Integer id, Order upDateOrder){
+//        upDateOrder.setId(id);
+//        orderRepository.save(upDateOrder);
+//    }
+//
+//    @Transactional
+//    public void delete(Integer id){
+//        orderRepository.deleteById(id);
+//    }
 }
