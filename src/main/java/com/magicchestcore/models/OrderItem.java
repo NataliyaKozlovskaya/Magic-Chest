@@ -24,7 +24,6 @@ public class OrderItem implements Serializable {
     @ManyToOne
     private Product product;
 
-
     private Integer price;
     private Integer quantity;
 

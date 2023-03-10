@@ -27,24 +27,27 @@ public class PromoCodeService {
         return promoCodeRepository.findAll();
     }
 
+    public Optional<PromoCode> findById(Integer id){
+        return promoCodeRepository.findById(id);
+    }
 
-    public Optional<PromoCode> findAllByPersonId(Integer personId){
-        return promoCodeRepository.findById(personId);
+    public List<PromoCode> findAllByPersonId(Integer personId){
+        return promoCodeRepository.findAllByPersonId(personId);
     }
 
     @Transactional
     public void save(PromoCode promoCode){
         promoCodeRepository.save(promoCode);
     }
-//
-//    @Transactional
-//    public void update(Integer id, Order upDateOrder){
-//        upDateOrder.setId(id);
-//        orderRepository.save(upDateOrder);
-//    }
-//
-//    @Transactional
-//    public void delete(Integer id){
-//        orderRepository.deleteById(id);
-//    }
+
+    @Transactional
+    public void update(Integer id, PromoCode updatePromoCode){
+        updatePromoCode.setId(id);
+        promoCodeRepository.save(updatePromoCode);
+    }
+
+    @Transactional
+    public void delete(Integer id){
+        promoCodeRepository.deleteById(id);
+    }
 }

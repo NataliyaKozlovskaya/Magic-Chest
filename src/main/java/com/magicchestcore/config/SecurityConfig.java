@@ -35,11 +35,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()// сначаа админ потом продукт
                 .authorizeRequests()
-                        .antMatchers("/person","/person/admin/{id}",
-                                "/order", "/order/{id}","/person/{personId}/order", "/order/{id}",
-                                "/admin/**",
-                                "/dressModel/admin/**", "/dressSize/admin/**",
-                                "/color/admin/**", "/product/admin").hasAuthority("ADMIN")
+//                        .antMatchers("/person","/person/admin/{id}",
+//                                "/order", "/order/{id}","/person/{personId}/order", "/order/{id}",
+//                                "/admin/**",
+//                                "/dressModel/admin/**", "/dressSize/admin/**",
+//                                "/color/admin/**", "/product/admin").hasAuthority("ADMIN")
 
                         .antMatchers("/person/registration").permitAll()
 //                        .antMatchers(HttpMethod.GET,"/person/{id}").access("@guard.checkUserId(authentication,#id)")

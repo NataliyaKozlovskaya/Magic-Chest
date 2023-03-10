@@ -16,10 +16,13 @@ import java.util.List;
 @AllArgsConstructor
 public class OrderDTO {
 
-    //private Integer id;
+    private Integer id;
     private Integer price;
-    private Date date;
+   // private Date date;
+
+    private Integer personId;
     //private PersonDTO person;
-    //private List<OrderItemDTO> orderItemList = new ArrayList<>();
+
+    private List<OrderItemDTO> orderItemList = new ArrayList<>();
 
 }

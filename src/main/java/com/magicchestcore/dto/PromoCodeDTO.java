@@ -18,4 +18,7 @@ public class PromoCodeDTO {
     private String name;
     private Integer discount;
 
+//    private PersonDTO person;
+
+    private Integer personId;
 }

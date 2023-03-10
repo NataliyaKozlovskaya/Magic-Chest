@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Time;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -15,9 +16,7 @@ import java.util.Optional;
 @Service
 @Transactional(readOnly = true)
 public class OrderService {
-
     private final OrderRepository orderRepository;
-
 
     @Autowired
     public OrderService(OrderRepository orderRepository) {
@@ -40,6 +39,9 @@ public class OrderService {
     @Transactional
     public void save(Order order){
         Date date = new Date();
+        date.setTime(System.currentTimeMillis());
+        order
+        System.out.println(date);
         order.setDate(date);
         orderRepository.save(order);
     }

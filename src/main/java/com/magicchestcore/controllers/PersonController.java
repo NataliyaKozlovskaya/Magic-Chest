@@ -86,13 +86,20 @@ public class PersonController {
         personService.update(id, personAuthDTO);
     }
 
-
-    public ResponseEntity<?> lockPerson(Integer id){
+    @PostMapping("/admin/lock/{id}")
+    public ResponseEntity<?> lockPerson(@PathVariable("id") Integer id){
         Optional<Person> person = personService.findById(id);
         person.ifPresent(value -> value.setAccountNonLocked(false));
         return ResponseEntity.ok().build();
     }
 
+
+    @PostMapping("/admin/unlock/{id}")
+    public ResponseEntity<?> unLockPerson(@PathVariable("id") Integer id){
+        Optional<Person> person = personService.findById(id);
+        person.ifPresent(value -> value.setAccountNonLocked(true));
+        return ResponseEntity.ok().build();
+    }
 
 
     // Надо ли это оставлять  ?

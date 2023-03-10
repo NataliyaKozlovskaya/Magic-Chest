@@ -74,27 +74,30 @@ public class Converter {
     }
 
 
-    public Dress convertToDress(DressDTO dressDTO){
-        return modelMapper.map(dressDTO, Dress.class);
+
+    public PromoCode convertToPromoCode(PromoCodeDTO promoCodeDTO){
+        return modelMapper.map(promoCodeDTO, PromoCode.class);
     }
-    public DressDTO convertToDressDTO(Dress dress){
-        return modelMapper.map(dress, DressDTO.class);
+    public PromoCodeDTO convertToPromoCodeDTO(PromoCode promoCode){
+        return modelMapper.map(promoCode, PromoCodeDTO.class);
     }
 
 
-    public Shoes convertToShoes(ShoesDTO shoesDTO){
-        return modelMapper.map(shoesDTO, Shoes.class);
-    }
-    public ShoesDTO convertToShoesDTO(Shoes shoes){
-        return modelMapper.map(shoes, ShoesDTO.class);
-    }
+    public PromoCodeDTO convertToPromoCodeDTO2(PromoCode promoCode){
+        PromoCodeDTO promoCodeDTO = new PromoCodeDTO();
+        promoCodeDTO.setId(promoCode.getId());
+        promoCodeDTO.setName(promoCode.getName());
+        promoCodeDTO.setDiscount(promoCode.getDiscount());
 
+        promoCodeDTO.setPersonId(promoCode.getPerson().getId());
+        // или перемапить person тоже
+//        PersonDTO personDTO = new PersonDTO();
+//        personDTO.setId(promoCode.getPerson().getId());
+//        personDTO.setUsername(promoCode.getPerson().getUsername());
+//
+//        promoCodeDTO.setPerson(personDTO);
 
-    public Bag convertToBag(BagDTO bagDTO){
-        return modelMapper.map(bagDTO, Bag.class);
-    }
-    public BagDTO convertToBagDTO(Bag bag){
-        return modelMapper.map(bag, BagDTO.class);
+        return promoCodeDTO;
     }
 
 

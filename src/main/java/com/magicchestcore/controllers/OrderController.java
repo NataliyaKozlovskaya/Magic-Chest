@@ -24,15 +24,15 @@ public class OrderController {
         this.converter = converter;
     }
 
-    // admin
+    // admin#todo
     @GetMapping("/order")
     public List<OrderDTO> findAll() {
         return orderService.findAll().stream().map(converter::convertToOrderDTO).collect(Collectors.toList());
     }
 
 
-    //admin, user
-    @GetMapping("/person/{personId}/order")
+    //admin, user#todo
+    @GetMapping("/person/order/{personId}")
     public List<OrderDTO> findOrdersByPersonId(@PathVariable("personId") Integer personId) {
         List<Order> ordersByPersonId = orderService.findOrdersByPersonId(personId);
         List<OrderDTO> collect = ordersByPersonId.stream().map(converter::convertToOrderDTO).collect(Collectors.toList());
@@ -41,7 +41,7 @@ public class OrderController {
     }
 
 // admin, USER
-    @GetMapping("/order/{id}")
+    @GetMapping("/person/orderId/{id}")
     public ResponseEntity<OrderDTO> findById(@PathVariable("id") Integer id) {
         Optional<Order> order = orderService.findById(id);
         if(order.isPresent()){
@@ -54,7 +54,7 @@ public class OrderController {
 
 
     //user
-    @PostMapping
+    @PostMapping("/order")
     public void save(@RequestBody OrderDTO orderDTO){
        orderService.save(converter.convertToOrder(orderDTO));
     }

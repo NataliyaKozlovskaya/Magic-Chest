@@ -40,7 +40,7 @@ public class Person implements UserDetails {
     @Enumerated(EnumType.STRING)//??? какой тип в бд?
     private EnumRole role;
 
-    @Column(name = "isAccountNonLocked")
+    @Column(name = "is_account_non_locked")
     private  boolean isAccountNonLocked;
 
     @OneToMany(mappedBy = "person", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -59,7 +59,7 @@ public class Person implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
@@ -69,11 +69,11 @@ public class Person implements UserDetails {
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return true;
     }
 }
