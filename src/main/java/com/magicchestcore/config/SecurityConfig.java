@@ -75,21 +75,3 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 }
 
-//    @Bean
-//    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-//        http
-//                .csrf().disable()
-//                .authorizeHttpRequests((requests) -> requests
-//                        .requestMatchers("/person").permitAll()
-//                        .anyRequest().hasAnyRole("USER", "ADMIN")
-//                )
-//                .httpBasic();
-//
-//        return http.build();
-//    }
-
-//    @Bean
-//    public AuthenticationManager authenticationManagerBean() throws Exception {
-//        return authenticationManagerBean();//super не ставила
-//    }
-//}

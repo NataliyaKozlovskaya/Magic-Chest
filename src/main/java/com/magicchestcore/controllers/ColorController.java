@@ -14,7 +14,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/color")
+//@RequestMapping("/color")
 public class ColorController {
     private final ColorService colorService;
     private final Converter converter;
@@ -25,13 +25,13 @@ public class ColorController {
     }
 
 // admin, user
-    @GetMapping
+    @GetMapping("/color")
     public List <ColorDTO> findAll() {
         return colorService.findAll().stream().map(converter::convertToColorDTO)
                 .collect(Collectors.toList());
     }
 // admin, user
-    @GetMapping("/{id}")
+    @GetMapping("/color/{id}")
     public ResponseEntity findById(@PathVariable("id") Integer id) {
         Optional<Color> color = colorService.findById(id);
         if(color.isPresent()){
@@ -43,19 +43,19 @@ public class ColorController {
     }
 
     // admin
-    @PostMapping("/admin")
+    @PostMapping("/admin/color")
     public void save(@RequestBody ColorDTO colorDTO){
         colorService.save(converter.convertToColor(colorDTO));
     }
 
     // admin
-    @PatchMapping("/admin/{id}")
+    @PatchMapping("/admin/color/{id}")
     public void update(@PathVariable("id") Integer id, @RequestBody ColorDTO updateColorDTO) {
         colorService.update(id, converter.convertToColor(updateColorDTO));
     }
 
     // admin
-    @DeleteMapping("/admin/{id}")
+    @DeleteMapping("/admin/color/{id}")
     public void delete(@PathVariable("id") Integer id) {
         colorService.delete(id);
     }

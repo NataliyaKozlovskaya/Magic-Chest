@@ -24,5 +24,5 @@ public class DressModel {
     private String model;
 
     @OneToMany(mappedBy = "dressModel", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Dress> dresses = new ArrayList<>();
+    private List<Product> dresses = new ArrayList<>();
 }

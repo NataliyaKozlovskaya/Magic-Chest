@@ -8,11 +8,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @ToString
 @Entity
-@Table(name = "bag")
 public class Bag extends Product {
-
-    @Column(name="name")
-    private String name;
 
     @ManyToOne
     @JoinColumn(name = "bag_model_id")

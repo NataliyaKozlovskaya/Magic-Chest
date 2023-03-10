@@ -2,7 +2,6 @@ package com.magicchestcore.servicies;
 
 import com.magicchestcore.config.util.EnumRole;
 import com.magicchestcore.dto.PersonAuthDTO;
-import com.magicchestcore.dto.PersonDTO;
 import com.magicchestcore.models.Person;
 import com.magicchestcore.repositories.PersonRepository;
 import org.modelmapper.ModelMapper;

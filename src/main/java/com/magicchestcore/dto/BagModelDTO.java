@@ -15,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 public class BagModelDTO {
 
-    //private Integer id;
+    private Integer id;
     private String model;
 
     //private List<BagDTO> bagList = new ArrayList<>();

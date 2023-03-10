@@ -25,6 +25,6 @@ public class ShoesModel {
     private String model;
 
     @OneToMany(mappedBy = "shoesModel", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Shoes> shoesList = new ArrayList<>();
+    private List<Product> shoesList = new ArrayList<>();
 
 }

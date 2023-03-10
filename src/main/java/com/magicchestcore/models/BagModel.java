@@ -26,5 +26,5 @@ public class BagModel {
     private String model;
 
     @OneToMany(mappedBy = "bagModel", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Bag> bagList = new ArrayList<>();
+    private List<Product> bagList = new ArrayList<>();
 }
