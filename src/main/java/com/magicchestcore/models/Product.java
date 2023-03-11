@@ -32,7 +32,7 @@ public class Product implements Serializable {
     private Integer quantity;
 
     @Column(name = "price")
-    private Double price;
+    private Integer price;
 
     @ManyToOne
     @JoinColumn(name="color_id")

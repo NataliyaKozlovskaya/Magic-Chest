@@ -11,8 +11,8 @@ import lombok.*;
 public class OrderItemDTO {
 
     //private OrderDTO orderDTO;
-    //private ProductDTO product;
-    private Integer price;
+    private ProductDTO product;
+    private Integer price;//product get price*quantity
     private Integer quantity;
 
 }

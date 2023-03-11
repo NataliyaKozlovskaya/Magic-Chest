@@ -18,7 +18,6 @@ public class OrderDTO {
 
     private Integer id;
     private Integer price;
-   // private Date date;
 
     private Integer personId;
     //private PersonDTO person;

@@ -54,9 +54,9 @@ public class OrderController {
 
 
     //user
-    @PostMapping("/order")
-    public void save(@RequestBody OrderDTO orderDTO){
-       orderService.save(converter.convertToOrder(orderDTO));
+    @PostMapping("/person/{personId}/order")
+    public void save(@PathVariable("personId") Integer personId, @RequestBody OrderDTO orderDTO){
+       orderService.save(personId, orderDTO);
     }
 
 
