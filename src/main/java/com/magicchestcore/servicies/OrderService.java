@@ -44,23 +44,21 @@ public class OrderService {
     }
 
     @Transactional
-    public void save(Integer personId, OrderDTO orderDTO){
+    public void save(Integer personId, OrderDTO orderDTO) {
 
         Person person = personRepository.getReferenceById(personId);
 
         List<OrderItemDTO> orderItemList = orderDTO.getOrderItemList();
         Order order = new Order();
         Integer endPrice = 0;
-        for(OrderItemDTO el: orderItemList){
+        for (OrderItemDTO el : orderItemList) {
             Integer id = el.getProduct().getId();
             Product product = productRepository.getReferenceById(id);
             Integer productPrice = product.getPrice();
             Integer quantity = el.getQuantity();
 
-            Integer priceOrderItem = productPrice*quantity;
+            Integer priceOrderItem = productPrice * quantity;
             endPrice = endPrice + priceOrderItem;
-
-            //order.setPrice(priceOrderItem);
 
             OrderItem orderItem = new OrderItem();
             orderItem.setProduct(product);
@@ -79,29 +77,6 @@ public class OrderService {
         orderRepository.save(order);
 
 
-        //Integer productId = orderDTO.getOrderItemList().get(0).getProduct().getId();
-        //Integer quantity = orderItemList.get(0).getQuantity();
-        //Product product = productRepository.getReferenceById(productId);
-        //Integer productPrice = product.getPrice();
-        //Integer priceOrderItem = productPrice*quantity;
-
-//        Order order = new Order();
-//
-//        order.setDate(new Date());
-//        order.setPerson(person);
-//        order.setPrice(priceOrderItem);
-//
-//        OrderItem orderItem = new OrderItem();
-//        orderItem.setProduct(product);
-//        orderItem.setQuantity(quantity);
-//        orderItem.setPrice(priceOrderItem);
-//
-//        orderItem.setOrder(order);
-//        order.getOrderItemList().add(orderItem);
-//
-//        product.getOrderItemList().add(orderItem);
-
-//        orderRepository.save(order);
     }
 
     @Transactional

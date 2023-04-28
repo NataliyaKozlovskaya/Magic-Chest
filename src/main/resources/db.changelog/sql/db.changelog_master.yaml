@@ -1,0 +1,17 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: Nataliya Kozlovskaya
+      changes:
+        - sqlFile:
+            encoding: utf8
+            path: changelog/sql/1_schema_character_set_and_collation.sql
+            relativeToChangelogFile: true
+  - changeSet:
+      id: 2
+      author: Nataliya Kozlovskaya
+      changes:
+        - sqlFile:
+            encoding: utf8
+            path: changelog/sql/2_dress.sql
+            relativeToChangelogFile: true

@@ -31,7 +31,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    protected  void configure(HttpSecurity http) throws Exception{
+    protected void configure(HttpSecurity http) throws Exception{
         http
                 .csrf().disable()// сначаа админ потом продукт
                 .authorizeRequests()
@@ -64,7 +64,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         //return NoOpPasswordEncoder.getInstance();
     }
 
-    @Bean// для чего нужен ???
+    @Bean//
     public AuthenticationManager customAuthenticationManager() throws Exception {
         return authenticationManager();
     }
