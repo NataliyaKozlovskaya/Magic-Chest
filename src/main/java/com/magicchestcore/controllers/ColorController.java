@@ -4,7 +4,6 @@ import com.magicchestcore.config.util.Converter;
 import com.magicchestcore.dto.ColorDTO;
 import com.magicchestcore.models.Color;
 import com.magicchestcore.servicies.ColorService;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +13,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
-//@RequestMapping("/color")
+@RequestMapping("/color")
 public class ColorController {
     private final ColorService colorService;
     private final Converter converter;
@@ -24,14 +23,13 @@ public class ColorController {
         this.converter = converter;
     }
 
-// admin, user
-    @GetMapping("/color")
+    @GetMapping
     public List <ColorDTO> findAll() {
         return colorService.findAll().stream().map(converter::convertToColorDTO)
                 .collect(Collectors.toList());
     }
-// admin, user
-    @GetMapping("/color/{id}")
+
+    @GetMapping("/{id}")
     public ResponseEntity findById(@PathVariable("id") Integer id) {
         Optional<Color> color = colorService.findById(id);
         if(color.isPresent()){
@@ -42,20 +40,20 @@ public class ColorController {
         }
     }
 
-    // admin
-    @PostMapping("/admin/color")
+
+    @PostMapping("/admin")
     public void save(@RequestBody ColorDTO colorDTO){
         colorService.save(converter.convertToColor(colorDTO));
     }
 
-    // admin
-    @PatchMapping("/admin/color/{id}")
-    public void update(@PathVariable("id") Integer id, @RequestBody ColorDTO updateColorDTO) {
-        colorService.update(id, converter.convertToColor(updateColorDTO));
+
+    @PatchMapping("/admin")
+    public void update(@RequestBody ColorDTO updatedColorDTO) {
+        colorService.update(converter.convertToColor(updatedColorDTO));
     }
 
-    // admin
-    @DeleteMapping("/admin/color/{id}")
+
+    @DeleteMapping("/admin/{id}")
     public void delete(@PathVariable("id") Integer id) {
         colorService.delete(id);
     }

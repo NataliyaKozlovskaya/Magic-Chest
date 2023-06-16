@@ -12,7 +12,6 @@ import java.util.Optional;
 @Service
 @Transactional(readOnly = true)
 public class ShoesModelService {
-
     private final ShoesModelRepository shoesModelRepository;
     @Autowired
     public ShoesModelService(ShoesModelRepository shoesModelRepository) {
@@ -22,7 +21,6 @@ public class ShoesModelService {
     public List<ShoesModel> findAll(){
         return shoesModelRepository.findAll();
     }
-
 
     public Optional<ShoesModel> findById(Integer id){
         return shoesModelRepository.findById(id);
@@ -34,9 +32,8 @@ public class ShoesModelService {
     }
 
     @Transactional
-    public void update(Integer id, ShoesModel upDateShoesModel){
-        upDateShoesModel.setId(id);
-        shoesModelRepository.save(upDateShoesModel);
+    public void update(ShoesModel upDatedShoesModel){
+        shoesModelRepository.save(upDatedShoesModel);
     }
 
     @Transactional

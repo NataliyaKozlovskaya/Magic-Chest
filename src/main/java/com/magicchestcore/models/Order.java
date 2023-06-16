@@ -8,7 +8,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@ToString
+@EqualsAndHashCode(exclude = {"orderItemList"})
+@ToString(exclude = {"orderItemList"})
 @Setter
 @Getter
 @AllArgsConstructor
@@ -35,7 +36,6 @@ public class Order implements Serializable {
     @OneToMany(mappedBy = "order", cascade = {CascadeType.PERSIST, CascadeType.MERGE},
             orphanRemoval = true)
     private List<OrderItem> orderItemList = new ArrayList<>();
-
 
 
 }

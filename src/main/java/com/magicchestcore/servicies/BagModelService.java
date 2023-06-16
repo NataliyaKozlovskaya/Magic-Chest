@@ -2,6 +2,7 @@ package com.magicchestcore.servicies;
 
 import com.magicchestcore.models.BagModel;
 import com.magicchestcore.repositories.BagModelRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -11,9 +12,8 @@ import java.util.Optional;
 @Service
 @Transactional(readOnly = true)
 public class BagModelService {
-
     private final BagModelRepository bagModelRepository;
-
+    @Autowired
     public BagModelService(BagModelRepository bagModelRepository) {
         this.bagModelRepository = bagModelRepository;
          }
@@ -21,7 +21,6 @@ public class BagModelService {
     public List<BagModel> findAll(){
         return bagModelRepository.findAll();
     }
-
 
     public Optional<BagModel> findById(Integer id){
         return bagModelRepository.findById(id);
@@ -33,9 +32,8 @@ public class BagModelService {
     }
 
     @Transactional
-    public void update(Integer id, BagModel upDateBagModel){
-        upDateBagModel.setId(id);
-        bagModelRepository.save(upDateBagModel);
+    public void update(BagModel upDatedBagModel){
+        bagModelRepository.save(upDatedBagModel);
     }
 
     @Transactional

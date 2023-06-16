@@ -1,6 +1,5 @@
 package com.magicchestcore.servicies;
 
-import com.magicchestcore.config.util.ProductType;
 import com.magicchestcore.models.Product;
 import com.magicchestcore.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
-
 @Service
 @Transactional(readOnly = true)
 public class ProductService {
@@ -19,33 +17,26 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
-
     public List<Product> findAll(){
         return productRepository.findAll();
     }
 
     public List<Product> findAllByDtype(String dtype){
-        List<Product> allByProductType = productRepository.findAllByDtype(dtype);
-
-        System.out.println(allByProductType.get(0).getDtype());
-        return allByProductType;
+        return productRepository.findAllByDtype(dtype);
     }
 
     public Optional<Product> findById(Integer id){
         return productRepository.findById(id);
     }
 
-
     @Transactional
     public void save(Product product){
         productRepository.save(product);
     }
 
-
     @Transactional
-    public void update(Integer id, Product upDateProduct){
-        upDateProduct.setId(id);
-        productRepository.save(upDateProduct);
+    public void update(Product upDatedProduct){
+        productRepository.save(upDatedProduct);
     }
 
     @Transactional

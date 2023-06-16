@@ -13,7 +13,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
-//@RequestMapping("/person/{personId}/order") -- ?
+@RequestMapping("/order/")
 public class OrderController {
     private final OrderService orderService;
     private final Converter converter;
@@ -24,24 +24,21 @@ public class OrderController {
         this.converter = converter;
     }
 
-    // admin#todo
-    @GetMapping("/order")
+
+    @GetMapping
     public List<OrderDTO> findAll() {
         return orderService.findAll().stream().map(converter::convertToOrderDTO).collect(Collectors.toList());
     }
 
 
-    //admin, user#todo
-    @GetMapping("/person/order/{personId}")
+    @GetMapping("/{personId}")
     public List<OrderDTO> findOrdersByPersonId(@PathVariable("personId") Integer personId) {
         List<Order> ordersByPersonId = orderService.findOrdersByPersonId(personId);
-        List<OrderDTO> collect = ordersByPersonId.stream().map(converter::convertToOrderDTO).collect(Collectors.toList());
-        return collect;
+        return ordersByPersonId.stream().map(converter::convertToOrderDTO).collect(Collectors.toList());
 
     }
 
-// admin, USER
-    @GetMapping("/person/orderId/{id}")
+    @GetMapping("/orderId/{id}")
     public ResponseEntity<OrderDTO> findById(@PathVariable("id") Integer id) {
         Optional<Order> order = orderService.findById(id);
         if(order.isPresent()){
@@ -53,14 +50,12 @@ public class OrderController {
     }
 
 
-    //user
-    @PostMapping("/person/{personId}/order")
-    public void save(@PathVariable("personId") Integer personId, @RequestBody OrderDTO orderDTO){
-       orderService.save(personId, orderDTO);
+    @PostMapping("/save")
+    public void save(@RequestBody OrderDTO orderDTO){
+       orderService.save(orderDTO);
     }
 
 
-    //  user
     @DeleteMapping("/{id}")
     public void delete(@PathVariable("id") Integer id) {
         orderService.delete(id);

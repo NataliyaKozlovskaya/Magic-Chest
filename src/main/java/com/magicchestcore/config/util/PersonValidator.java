@@ -1,7 +1,5 @@
 package com.magicchestcore.config.util;
 
-
-import com.magicchestcore.dto.PersonAuthDTO;
 import com.magicchestcore.dto.PersonDTO;
 import com.magicchestcore.servicies.PersonDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +10,6 @@ import org.springframework.validation.Validator;
 
 @Component
 public class PersonValidator implements Validator {
-
     private final PersonDetailsService personDetailsService;
 
     @Autowired
@@ -22,19 +19,17 @@ public class PersonValidator implements Validator {
 
     @Override
     public boolean supports(Class<?> clazz) {
-        return PersonAuthDTO.class.equals(clazz);
+        return PersonDTO.class.equals(clazz);
     }
 
     @Override
     public void validate(Object target, Errors errors) {
-
-        PersonAuthDTO personAuthDTO = (PersonAuthDTO) target;
+        PersonDTO personDTO = (PersonDTO) target;
         try{
-            personDetailsService.loadUserByUsername(personAuthDTO.getUsername());
+            personDetailsService.loadUserByUsername(personDTO.getUsername());
         }catch (UsernameNotFoundException ignored){
             return;
         }
-        errors.reject("", "Человек с таким именем уже существует");
-//        errors.rejectValue("username", "", "Человек с таким именем уже существует");
+        errors.reject("", "A user with the same name already exists");
     }
 }

@@ -5,12 +5,11 @@ import com.magicchestcore.config.util.PersonValidator;
 import com.magicchestcore.dto.PersonAuthDTO;
 import com.magicchestcore.dto.PersonDTO;
 import com.magicchestcore.models.Person;
+import com.magicchestcore.servicies.PersonDetailsService;
 import com.magicchestcore.servicies.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,27 +21,45 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/person")
 public class PersonController {
-
     private final PersonService personService;
+    private final PersonDetailsService personDetailsService;
     private final PersonValidator personValidator;
     private final Converter converter;
 
     @Autowired
-    public PersonController(PersonService personService, PersonValidator personValidator, Converter converter) {
+    public PersonController(PersonService personService, PersonDetailsService personDetailsService,
+                            PersonValidator personValidator, Converter converter) {
         this.personService = personService;
+        this.personDetailsService = personDetailsService;
         this.personValidator = personValidator;
         this.converter = converter;
     }
 
-// for admin
+    @PostMapping("/registration")
+    public ResponseEntity<?> create(@RequestBody @Valid PersonDTO personDTO, BindingResult bindingResult){
+        personValidator.validate(personDTO, bindingResult);
+        if(bindingResult.hasErrors()){
+            return new ResponseEntity<>(bindingResult.toString(), HttpStatus.CONFLICT);
+        }
+        Person person = personService.register(converter.convertToPerson(personDTO));
+        PersonDTO registeredPerson = converter.convertToPersonDTO(person);
+        return ResponseEntity.ok(registeredPerson);
+    }
+
+    @PostMapping("/login")
+    public void login(@RequestBody PersonAuthDTO personAuthDTO){
+       String username = personAuthDTO.getUsername();
+       personDetailsService.loadUserByUsername(username);
+    }
+
+
     @GetMapping
     public ResponseEntity<List<PersonDTO>> findAll() {
         List<Person> people = personService.findAll();
-        List<PersonDTO> collect = people.stream().map(converter::convertToPersonDTO).collect(Collectors.toList());
-        return ResponseEntity.ok(collect);
+        List<PersonDTO> listPerson = people.stream().map(converter::convertToPersonDTO).collect(Collectors.toList());
+        return ResponseEntity.ok(listPerson);
     }
 
-    // for user
 
     @GetMapping("/{id}")
     public ResponseEntity<PersonDTO> findById(@PathVariable("id") Integer id){
@@ -55,7 +72,7 @@ public class PersonController {
         }
     }
 
-    //for admin
+
     @GetMapping("/admin/{id}")
     public ResponseEntity<?> findByIdAdmin(@PathVariable("id") Integer id){
         Optional<Person> person = personService.findById(id);
@@ -67,24 +84,11 @@ public class PersonController {
         }
     }
 
-// for user
-    @PostMapping("/registration")
-    public ResponseEntity<?> create(@RequestBody @Valid PersonAuthDTO personAuthDTO, BindingResult bindingResult){
-        personValidator.validate(personAuthDTO, bindingResult);
-        if(bindingResult.hasErrors()){
-            return new ResponseEntity<>(bindingResult.toString(), HttpStatus.CONFLICT);
-        }
-        Person person = personService.register(converter.convertToPerson(personAuthDTO));
-        PersonAuthDTO registeredPerson = converter.convertToPersonAuthDTO(person);
-        return ResponseEntity.ok(registeredPerson);
+    @PatchMapping
+    public void update(@RequestBody PersonDTO personDTO){
+        personService.update(converter.convertToPerson(personDTO));
     }
 
-
-    // for user
-    @PatchMapping("{id}")
-    public void update(@PathVariable("id") Integer id, @RequestBody PersonAuthDTO personAuthDTO){
-        personService.update(id, personAuthDTO);
-    }
 
     @PostMapping("/admin/lock/{id}")
     public ResponseEntity<?> lockPerson(@PathVariable("id") Integer id){
@@ -100,17 +104,6 @@ public class PersonController {
         person.ifPresent(value -> value.setAccountNonLocked(true));
         return ResponseEntity.ok().build();
     }
-
-
-    // Надо ли это оставлять  ?
-    @GetMapping("/showPersonInfo")
-    public Person showPersonInfo(){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Person principal = (Person) authentication.getPrincipal();
-        System.out.println(principal);
-        return principal;
-    }
-
 
 }
 

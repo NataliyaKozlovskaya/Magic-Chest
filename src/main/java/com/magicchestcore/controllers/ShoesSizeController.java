@@ -23,13 +23,14 @@ public class ShoesSizeController {
         this.converter = converter;
     }
 
-// admin, user
+
     @GetMapping
     public List <ShoesSizeDTO> findAll() {
         return shoesSizeService.findAll().stream().map(converter::convertToShoesSizeDTO)
                 .collect(Collectors.toList());
     }
-// admin, user
+
+
     @GetMapping("/{id}")
     public ResponseEntity findById(@PathVariable("id") Integer id) {
         Optional<ShoesSize> shoesSize = shoesSizeService.findById(id);
@@ -41,19 +42,19 @@ public class ShoesSizeController {
         }
     }
 
-    // admin
+
     @PostMapping("/admin")
     public void save(@RequestBody ShoesSizeDTO shoesSizeDTO){
         shoesSizeService.save(converter.convertToShoesSize(shoesSizeDTO));
     }
 
-    // admin
-    @PatchMapping("/admin/{id}")
-    public void update(@PathVariable("id") Integer id, @RequestBody ShoesSizeDTO updateShoesSizeDTO) {
-        shoesSizeService.update(id, converter.convertToShoesSize(updateShoesSizeDTO));
+
+    @PatchMapping("/admin")
+    public void update(@RequestBody ShoesSizeDTO updatedShoesSizeDTO) {
+        shoesSizeService.update(converter.convertToShoesSize(updatedShoesSizeDTO));
     }
 
-    // admin
+
     @DeleteMapping("/admin/{id}")
     public void delete(@PathVariable("id") Integer id) {
         shoesSizeService.delete(id);

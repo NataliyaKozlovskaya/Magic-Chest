@@ -7,9 +7,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Setter
 @Getter
 @AllArgsConstructor
@@ -21,20 +18,6 @@ public class ProductDTO {
     private Integer id;
     private String name;
     private Integer quantity;
-    private Double price;
-
-    private ColorDTO color;
-    private DressModelDTO dressModel;
-    private DressSizeDTO dressSize;
-
-    private ShoesModelDTO shoesModel;
-    private ShoesSizeDTO shoesSize;
-
-    private BagModelDTO bagModel;
-    private BagSizeDTO bagSize;
-
-   // private List<OrderItemDTO> orderItemList = new ArrayList<>();
-
-
+    private Integer price;
 
 }

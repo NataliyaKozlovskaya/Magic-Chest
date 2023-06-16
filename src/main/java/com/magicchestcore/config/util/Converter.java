@@ -2,16 +2,24 @@ package com.magicchestcore.config.util;
 
 import com.magicchestcore.dto.*;
 import com.magicchestcore.models.*;
+import com.magicchestcore.repositories.OrderRepository;
+import com.magicchestcore.repositories.PersonRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
-// вынести в отдельный класс все м-ды// convert(class+static method or @component+import)
 @Component
 public class Converter {
     private final ModelMapper modelMapper;
-    public Converter(ModelMapper modelMapper) {
+    private final OrderRepository orderRepository;
+    private final PersonRepository personRepository;
+    public Converter(ModelMapper modelMapper, OrderRepository orderRepository, PersonRepository personRepository) {
         this.modelMapper = modelMapper;
+        this.orderRepository = orderRepository;
+        this.personRepository = personRepository;
     }
 
     public Product convertToProductType(ProductDTO productDTO){
@@ -50,6 +58,58 @@ public class Converter {
     }
 
 
+    public OrderItem convertToOrderItem(OrderItemDTO orderItemDTO){
+
+        OrderItem orderItem = new OrderItem();
+
+        Integer orderId = orderItemDTO.getOrderId();
+        Order order = orderRepository.getReferenceById(orderId);// ????????????
+        orderItem.setOrder(order); // ??????????
+
+        ProductDTO productDTO = orderItemDTO.getProductDTO();
+        Product product = convertToProduct(productDTO);
+
+        orderItem.setProduct(product);
+
+        orderItem.setQuantity(orderItemDTO.getQuantity());
+        orderItem.setPrice(orderItem.getPrice());
+
+        return orderItem;
+    }
+
+    public Order convertToOrder(OrderDTO orderDTO){
+        Integer personId = orderDTO.getPersonId();
+        Person person = personRepository.getReferenceById(personId);
+
+        List<OrderItemDTO> orderItemDTOList = orderDTO.getOrderItemList();
+        List<OrderItem> collect = orderItemDTOList.stream()
+                .map(this::convertToOrderItem)
+                .collect(Collectors.toList());
+        int endPrice = 0;
+        for (OrderItem el: collect){
+
+            Integer price = el.getPrice();
+            Integer quantity = el.getQuantity();
+            endPrice += price*quantity;
+        }
+
+        Order order = new Order();
+
+        order.setId(orderDTO.getId());
+        order.setPrice(endPrice);
+        order.setDate(new Date());
+        order.setPerson(person);
+        order.setOrderItemList(collect);
+
+        return order;
+    }
+
+
+    public OrderDTO convertToOrderDTO(Order order){
+        return modelMapper.map(order, OrderDTO.class);
+    }
+
+
     public Person convertToPerson(PersonDTO personDTO){
         return modelMapper.map(personDTO, Person.class);
     }
@@ -66,17 +126,6 @@ public class Converter {
     }
 
 
-    public Order convertToOrder(OrderDTO orderDTO){
-        Order order = new Order();
-//        productRepp
-
-        return modelMapper.map(orderDTO, Order.class);
-    }
-    public OrderDTO convertToOrderDTO(Order order){
-        return modelMapper.map(order, OrderDTO.class);
-    }
-
-
 
     public PromoCode convertToPromoCode(PromoCodeDTO promoCodeDTO){
         return modelMapper.map(promoCodeDTO, PromoCode.class);
@@ -85,23 +134,6 @@ public class Converter {
         return modelMapper.map(promoCode, PromoCodeDTO.class);
     }
 
-
-    public PromoCodeDTO convertToPromoCodeDTO2(PromoCode promoCode){
-        PromoCodeDTO promoCodeDTO = new PromoCodeDTO();
-        promoCodeDTO.setId(promoCode.getId());
-        promoCodeDTO.setName(promoCode.getName());
-        promoCodeDTO.setDiscount(promoCode.getDiscount());
-
-        promoCodeDTO.setPersonId(promoCode.getPerson().getId());
-        // или перемапить person тоже
-//        PersonDTO personDTO = new PersonDTO();
-//        personDTO.setId(promoCode.getPerson().getId());
-//        personDTO.setUsername(promoCode.getPerson().getUsername());
-//
-//        promoCodeDTO.setPerson(personDTO);
-
-        return promoCodeDTO;
-    }
 
 
     public DressModel convertToDressModel(DressModelDTO dressModelDTO){
@@ -138,12 +170,15 @@ public class Converter {
     }
 
 
+
     public BagSize convertToBagSize(BagSizeDTO bagSizeDTO){
         return modelMapper.map(bagSizeDTO, BagSize.class);
     }
     public BagSizeDTO convertToBagSizeDTO(BagSize bagSize){
         return modelMapper.map(bagSize, BagSizeDTO.class);
     }
+
+
 
     public DressSize convertToDressSize(DressSizeDTO dressSizeDTO){
         return modelMapper.map(dressSizeDTO,DressSize.class);

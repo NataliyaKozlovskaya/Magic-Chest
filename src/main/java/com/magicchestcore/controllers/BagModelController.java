@@ -40,23 +40,22 @@ public class BagModelController {
         }
     }
 
-    // admin
+
     @PostMapping("/admin")
     public void save(@RequestBody BagModelDTO bagModelDTO){
         bagModelService.save(converter.convertToBagModel(bagModelDTO));
     }
 
-    // admin
-    @PatchMapping("/admin/{id}")
-    public void update(@PathVariable("id") Integer id, @RequestBody BagModelDTO updateBagModelDTO) {
-        bagModelService.update(id, converter.convertToBagModel(updateBagModelDTO));
+
+    @PatchMapping("/admin")
+    public void update(@RequestBody BagModelDTO updatedBagModelDTO) {
+        bagModelService.update(converter.convertToBagModel(updatedBagModelDTO));
     }
 
-    // admin
+
     @DeleteMapping("/admin/{id}")
     public void delete(@PathVariable("id") Integer id) {
         bagModelService.delete(id);
     }
-
 
 }

@@ -23,13 +23,12 @@ public class DressSizeController {
         this.converter = converter;
     }
 
-// admin, user
     @GetMapping
     public List <DressSizeDTO> findAll() {
         return dressSizeService.findAll().stream().map(converter::convertToDressSizeDTO)
                 .collect(Collectors.toList());
     }
-// admin, user
+
     @GetMapping("/{id}")
     public ResponseEntity findById(@PathVariable("id") Integer id) {
         Optional<DressSize> dressSize = dressSizeService.findById(id);
@@ -41,19 +40,19 @@ public class DressSizeController {
         }
     }
 
-    // admin
+
     @PostMapping("/admin")
     public void save(@RequestBody DressSizeDTO dressSizeDTO){
         dressSizeService.save(converter.convertToDressSize(dressSizeDTO));
     }
 
-    // admin
-    @PatchMapping("/admin/{id}")
-    public void update(@PathVariable("id") Integer id, @RequestBody DressSizeDTO updateDressSizeDTO) {
-        dressSizeService.update(id, converter.convertToDressSize(updateDressSizeDTO));
+
+    @PatchMapping("/admin")
+    public void update(@RequestBody DressSizeDTO updatedDressSizeDTO) {
+        dressSizeService.update(converter.convertToDressSize(updatedDressSizeDTO));
     }
 
-    // admin
+
     @DeleteMapping("/admin/{id}")
     public void delete(@PathVariable("id") Integer id) {
         dressSizeService.delete(id);

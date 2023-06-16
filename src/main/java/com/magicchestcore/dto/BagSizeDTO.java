@@ -13,5 +13,5 @@ public class BagSizeDTO {
 
     private Integer id;
     private Integer size;
-    //private List<BagDTO> bagList = new ArrayList<>();
+
 }

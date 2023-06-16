@@ -1,12 +1,8 @@
 package com.magicchestcore.models;
 
-import com.magicchestcore.config.util.EnumRole;
 import lombok.*;
 
 import javax.persistence.*;
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 @ToString
 @Setter

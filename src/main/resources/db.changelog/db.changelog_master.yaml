@@ -13,5 +13,5 @@ databaseChangeLog:
       changes:
         - sqlFile:
             encoding: utf8
-            path: changelog/sql/2_dress.sql
+            path: changelog/sql/2_person_order_orderItem_product_promoCode.sql
             relativeToChangelogFile: true

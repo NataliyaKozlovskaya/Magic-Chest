@@ -6,15 +6,13 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.management.relation.Role;
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-
-@ToString
+@EqualsAndHashCode(exclude = {"orders", "promoCodes"})
+@ToString (exclude = {"orders", "promoCodes"})
 @Setter
 @Getter
 @AllArgsConstructor
@@ -37,7 +35,7 @@ public class Person implements UserDetails {
     private String address;
 
     @Column(name = "role")
-    @Enumerated(EnumType.STRING)//??? какой тип в бд?
+    @Enumerated(EnumType.STRING)
     private EnumRole role;
 
     @Column(name = "is_account_non_locked")
@@ -47,7 +45,6 @@ public class Person implements UserDetails {
     private List<Order> orders = new ArrayList<>();
 
 
-    //???????????????////
     @OneToMany(mappedBy = "person", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PromoCode> promoCodes = new ArrayList<>();
 

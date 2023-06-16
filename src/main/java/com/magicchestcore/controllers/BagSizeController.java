@@ -23,13 +23,12 @@ public class BagSizeController {
         this.converter = converter;
     }
 
-// admin, user
     @GetMapping
     public List <BagSizeDTO> findAll() {
         return bagSizeService.findAll().stream().map(converter::convertToBagSizeDTO)
                 .collect(Collectors.toList());
     }
-// admin, user
+
     @GetMapping("/{id}")
     public ResponseEntity findById(@PathVariable("id") Integer id) {
         Optional<BagSize> bagSize = bagSizeService.findById(id);
@@ -41,19 +40,19 @@ public class BagSizeController {
         }
     }
 
-    // admin
+
     @PostMapping("/admin")
     public void save(@RequestBody BagSizeDTO bagSizeDTO){
         bagSizeService.save(converter.convertToBagSize(bagSizeDTO));
     }
 
-    // admin
-    @PatchMapping("/admin/{id}")
-    public void update(@PathVariable("id") Integer id, @RequestBody BagSizeDTO updateBagSizeDTO) {
-        bagSizeService.update(id, converter.convertToBagSize(updateBagSizeDTO));
+
+    @PatchMapping("/admin")
+    public void update(@RequestBody BagSizeDTO updatedBagSizeDTO) {
+        bagSizeService.update(converter.convertToBagSize(updatedBagSizeDTO));
     }
 
-    // admin
+
     @DeleteMapping("/admin/{id}")
     public void delete(@PathVariable("id") Integer id) {
         bagSizeService.delete(id);

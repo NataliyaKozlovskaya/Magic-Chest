@@ -1,14 +1,13 @@
 package com.magicchestcore.models;
 
-import com.magicchestcore.config.util.ProductType;
 import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-
-@ToString
+@EqualsAndHashCode(exclude = {"orderItemList"})
+@ToString(exclude = {"orderItemList"})
 @Setter
 @Getter
 @AllArgsConstructor

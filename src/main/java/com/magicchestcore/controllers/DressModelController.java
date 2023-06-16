@@ -40,23 +40,22 @@ public class DressModelController {
         }
     }
 
-    // admin
+
     @PostMapping("/admin")
     public void save(@RequestBody DressModelDTO dressModelDTO){
        dressModelService.save(converter.convertToDressModel(dressModelDTO));
     }
 
-    // admin
-    @PatchMapping("/admin/{id}")
-    public void update(@PathVariable("id") Integer id, @RequestBody DressModelDTO updateDressModelDTO) {
-        dressModelService.update(id, converter.convertToDressModel(updateDressModelDTO));
+
+    @PatchMapping("/admin")
+    public void update(@RequestBody DressModelDTO updatedDressModelDTO) {
+        dressModelService.update(converter.convertToDressModel(updatedDressModelDTO));
     }
 
-    // admin
+
     @DeleteMapping("/admin/{id}")
     public void delete(@PathVariable("id") Integer id) {
         dressModelService.delete(id);
     }
-
 
 }

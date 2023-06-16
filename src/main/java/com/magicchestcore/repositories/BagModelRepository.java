@@ -7,5 +7,4 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface BagModelRepository extends JpaRepository <BagModel, Integer>{
 
-
 }
